@@ -1,0 +1,62 @@
+.container-page {
+  display: grid;
+  min-height: 100vh;
+  background-color: var(--c12);
+  align-items: stretch;
+  grid-template-columns: 1fr 1.5fr;
+}
+
+/* informativo */
+
+.login-container-information {
+  padding: 2.5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-image: linear-gradient(var(--cp6), var(--cp4));
+}
+
+.login-information {
+  margin: auto 0;
+}
+
+.container-img {
+  margin: 0 auto;
+  max-width: 25rem;
+}
+
+.text-information {
+  max-width: 30ch;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.btn-back {
+  color: var(--cp1);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* formulario */
+.container-login-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  padding: 40px;
+  display: flex;
+  width: 100%;
+  max-width: 370px;
+  border-radius: 12px;
+  flex-direction: column;
+  background-color: var(--c11);
+}
+
+.login-form img {
+  margin: 0 auto 2.5rem auto;
+}

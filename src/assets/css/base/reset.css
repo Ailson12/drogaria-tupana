@@ -1,0 +1,14 @@
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+p,
+ul,
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
