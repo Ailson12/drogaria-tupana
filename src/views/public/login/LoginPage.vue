@@ -14,6 +14,9 @@
       </div>
     </div>
     <div class="container-login-form">
+      <div class="back-mobile">
+        <router-link to="/" class="btn-back">Voltar</router-link>
+      </div>
       <form-wrapper class="login-form" :validation-schema="validationSchema" @submit="handleSubmit">
         <img width="280" height="38" src="@/assets/icons/logo-drogaria.svg" alt="logo tupana" />
 

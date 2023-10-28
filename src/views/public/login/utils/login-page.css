@@ -7,7 +7,6 @@
 }
 
 /* informativo */
-
 .login-container-information {
   padding: 2.5rem;
   display: flex;
@@ -51,7 +50,7 @@
   padding: 40px;
   display: flex;
   width: 100%;
-  max-width: 370px;
+  max-width: 28.125rem;
   border-radius: 12px;
   flex-direction: column;
   background-color: var(--c11);
@@ -59,4 +58,49 @@
 
 .login-form img {
   margin: 0 auto 2.5rem auto;
+}
+
+.back-mobile {
+  width: 100%;
+  display: none;
+  max-width: 28.125rem;
+  margin-bottom: 1rem;
+}
+
+.back-mobile > .btn-back {
+  color: var(--cp2);
+}
+
+@media (max-width: 1000px) {
+  .back-mobile {
+    display: flex;
+  }
+
+  .container-page {
+    grid-template-columns: 1fr;
+  }
+
+  .container-login-form {
+    padding: 2rem;
+    flex-direction: column;
+  }
+
+  .login-container-information {
+    display: none;
+  }
+
+  .login-form img {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container-login-form {
+    padding: 1rem;
+  }
+
+  .login-form {
+    padding: 2rem;
+  }
 }
