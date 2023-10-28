@@ -1,15 +1,24 @@
 <template>
   <div class="group-form-item">
     <label :for="name">{{ label }}</label>
-    <input type="text" :id="name" />
+    <input v-on="handlers" :type="type" :id="name" :value="value" />
+    <span class="message-error" :style="{ opacity: errorMessage?.length ? 1 : 0 }">
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { useField } from 'vee-validate'
+import { defineComponent, ref, toRef } from 'vue'
+
 export default defineComponent({
   name: 'TextField',
   props: {
+    type: {
+      type: String,
+      default: 'text'
+    },
     label: {
       type: String
     },
@@ -20,6 +29,22 @@ export default defineComponent({
     mb: {
       type: String
     }
+  },
+  setup(props) {
+    const { value, errorMessage, handleChange, handleBlur } = useField(
+      toRef(props, 'name'),
+      undefined,
+      {
+        validateOnValueUpdate: false
+      }
+    )
+
+    const handlers = ref({
+      blur: handleBlur,
+      input: handleChange
+    })
+
+    return { value, handlers, errorMessage }
   }
 })
 </script>
@@ -52,5 +77,14 @@ export default defineComponent({
 .group-form-item input:hover,
 .group-form-item input:focus-visible {
   border-color: var(--cp2);
+}
+
+.message-error {
+  opacity: 0;
+  transition: 0.1s;
+  color: #ff380b;
+  margin-top: 2px;
+  font-size: 12px;
+  min-height: 22px;
 }
 </style>

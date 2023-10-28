@@ -14,19 +14,27 @@
       </div>
     </div>
     <div class="container-login-form">
-      <form class="login-form">
+      <form-wrapper class="login-form" :validation-schema="validationSchema">
         <img width="280" height="38" src="@/assets/icons/logo-drogaria.svg" alt="logo tupana" />
 
-        <text-field label="E-mail" name="email" mb="1.8rem" />
-        <text-field label="Senha" name="password" mb="2rem" />
-        <custom-button>Entrar</custom-button>
-      </form>
+        <text-field label="E-mail" name="email" mb="0.37rem" autocomplete="username" />
+        <text-field
+          label="Senha"
+          autocomplete="current-password"
+          type="password"
+          name="password"
+          mb="0.62rem"
+        />
+        <custom-button type="submit">Entrar</custom-button>
+      </form-wrapper>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Form as FormWrapper } from 'vee-validate'
+import { validationSchema } from './utils/validation'
 import TextField from '@/components/form/TextField.vue'
 import CustomButton from '@/components/geral/CustomButton.vue'
 
@@ -34,9 +42,15 @@ export default defineComponent({
   name: 'LoginPage',
   components: {
     TextField,
+    FormWrapper,
     CustomButton
+  },
+  setup() {
+    return {
+      validationSchema
+    }
   }
 })
 </script>
 
-<style src="./login-page.css" scoped />
+<style src="./utils/login-page.css" scoped />
