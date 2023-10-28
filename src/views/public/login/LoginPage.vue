@@ -15,7 +15,7 @@
     </div>
     <div class="container-login-form">
       <form class="login-form">
-        <img width="280" height="38" src="@/assets/icons/logo-drogaria.svg" alt="" />
+        <img width="280" height="38" src="@/assets/icons/logo-drogaria.svg" alt="logo tupana" />
 
         <text-field label="E-mail" name="email" mb="1.8rem" />
         <text-field label="Senha" name="password" mb="2rem" />
@@ -39,4 +39,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="@/assets/css/login-page.css" scoped />
+<style src="./login-page.css" scoped />

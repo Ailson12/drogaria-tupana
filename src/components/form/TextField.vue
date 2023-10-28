@@ -35,6 +35,7 @@ export default defineComponent({
   color: var(--c1);
   font-size: 1rem;
   margin-bottom: 4px;
+  cursor: pointer;
 }
 
 .group-form-item input {
