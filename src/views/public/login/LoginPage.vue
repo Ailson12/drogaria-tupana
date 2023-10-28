@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="container-login-form">
-      <form-wrapper class="login-form" :validation-schema="validationSchema">
+      <form-wrapper class="login-form" :validation-schema="validationSchema" @submit="handleSubmit">
         <img width="280" height="38" src="@/assets/icons/logo-drogaria.svg" alt="logo tupana" />
 
         <text-field label="E-mail" name="email" mb="0.37rem" autocomplete="username" />
@@ -48,6 +48,11 @@ export default defineComponent({
   setup() {
     return {
       validationSchema
+    }
+  },
+  methods: {
+    handleSubmit(values: Record<string, unknown>) {
+      console.log('values: ', values)
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="group-form-item">
     <label :for="name">{{ label }}</label>
-    <input v-on="handlers" :type="type" :id="name" :value="value" />
+    <input v-on="handlers" :type="type" :id="name" :value="value" v-bind="$attrs" />
     <span class="message-error" :style="{ opacity: errorMessage?.length ? 1 : 0 }">
       {{ errorMessage }}
     </span>
