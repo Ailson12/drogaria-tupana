@@ -1,5 +1,7 @@
 <template>
-  <div class="c1">produto</div>
+  <div class="c1">
+    <p>produtos</p>
+  </div>
 </template>
 
 <script lang="ts">
