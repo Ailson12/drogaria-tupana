@@ -65,7 +65,12 @@ export default defineComponent({
           email: values.email,
           password: values.password
         })
-        .then((data) => this.setLogin(data))
+        .then((data) => {
+          this.setLogin(data)
+          this.$router.push({
+            name: 'product'
+          })
+        })
         .catch(() => {
           window.alert('Erro ao realizar login')
         })
