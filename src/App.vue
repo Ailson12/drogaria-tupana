@@ -1,13 +1,22 @@
 <script lang="ts">
+import { mapState } from 'pinia'
 import { defineComponent } from 'vue'
-import PublicApplication from '@/views/public/PublicApplication.vue';
+import { useAuthStore } from './stores/auth.store'
+import AuthApplication from '@/views/auth/AuthApplication.vue'
+import PublicApplication from '@/views/public/PublicApplication.vue'
 
 export default defineComponent({
   name: 'App',
-  components: { PublicApplication }
+  components: { AuthApplication, PublicApplication },
+  computed: {
+    ...mapState(useAuthStore, ['isAuthenticated']),
+    componentActive() {
+      return this.isAuthenticated ? 'AuthApplication' : 'PublicApplication'
+    }
+  }
 })
 </script>
 
 <template>
-  <PublicApplication />
+  <component :is="componentActive" />
 </template>

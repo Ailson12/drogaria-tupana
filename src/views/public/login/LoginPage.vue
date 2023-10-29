@@ -35,9 +35,11 @@
 </template>
 
 <script lang="ts">
-import { api } from '@/utils/api'
+import { mapActions } from 'pinia'
 import { defineComponent } from 'vue'
+import { useAuthStore } from '@/stores/auth.store'
 import { validationSchema } from './utils/validation'
+import { LoginService } from '@/services/LoginService'
 import TextField from '@/components/form/TextField.vue'
 import CustomButton from '@/components/geral/CustomButton.vue'
 import { Form as FormWrapper, type GenericObject } from 'vee-validate'
@@ -51,23 +53,20 @@ export default defineComponent({
   },
   setup() {
     return {
-      validationSchema
+      validationSchema,
+      service: LoginService.init()
     }
   },
   methods: {
+    ...mapActions(useAuthStore, ['setLogin']),
     handleSubmit(values: GenericObject) {
-      api
-        .post('login', {
+      this.service
+        .login({
           email: values.email,
           password: values.password
         })
-        .then((data) => {
-          console.log({
-            data
-          })
-        })
-        .catch((error) => {
-          console.error(error)
+        .then((data) => this.setLogin(data))
+        .catch(() => {
           window.alert('Erro ao realizar login')
         })
     }
