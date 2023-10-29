@@ -1,3 +1,4 @@
+import router from '@/router'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import type { DataLoginType } from '@/types/AuthType'
@@ -17,6 +18,12 @@ export const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
+    logout() {
+      this.dataLogin = {} as DataLoginType
+      router.push({
+        name: 'login'
+      })
+    },
     setLogin(data: DataLoginType) {
       this.dataLogin = data
     }
