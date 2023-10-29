@@ -35,11 +35,12 @@
 </template>
 
 <script lang="ts">
+import { api } from '@/utils/api'
 import { defineComponent } from 'vue'
-import { Form as FormWrapper } from 'vee-validate'
 import { validationSchema } from './utils/validation'
 import TextField from '@/components/form/TextField.vue'
 import CustomButton from '@/components/geral/CustomButton.vue'
+import { Form as FormWrapper, type GenericObject } from 'vee-validate'
 
 export default defineComponent({
   name: 'LoginPage',
@@ -54,8 +55,21 @@ export default defineComponent({
     }
   },
   methods: {
-    handleSubmit(values: Record<string, unknown>) {
-      console.log('values: ', values)
+    handleSubmit(values: GenericObject) {
+      api
+        .post('login', {
+          email: values.email,
+          password: values.password
+        })
+        .then((data) => {
+          console.log({
+            data
+          })
+        })
+        .catch((error) => {
+          console.error(error)
+          window.alert('Erro ao realizar login')
+        })
     }
   }
 })
