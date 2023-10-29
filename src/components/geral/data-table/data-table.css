@@ -1,0 +1,41 @@
+.table-wrapper {
+  background-color: var(--c11);
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrapper thead tr {
+  background-color: var(--cp6);
+}
+
+.table-wrapper thead tr th {
+  color: var(--cp1);
+}
+
+.table-wrapper tbody tr {
+  color: var(--c1);
+  background-color: var(--c10);
+}
+
+.table-wrapper tbody td {
+  border: 1px solid var(--c9);
+}
+
+.table-wrapper tbody td:first-of-type {
+  border-left: none;
+}
+
+.table-wrapper tbody td:last-of-type {
+  border-right: none;
+}
+
+.table-wrapper td,
+.table-wrapper th {
+  text-align: left;
+  padding: 15px 20px;
+}
