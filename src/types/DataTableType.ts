@@ -1,5 +1,10 @@
 export type HeaderDataTableType = {
   title: string
   key: string
-  align?: string
+  align?: CanvasTextAlign
+}
+
+export type PaginatorDataTableType = {
+  totalItems: number
+  currentPage: number
 }

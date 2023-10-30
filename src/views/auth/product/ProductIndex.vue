@@ -1,11 +1,18 @@
 <template>
-  <data-table :headers="headers" :items="items" />
+  <data-table
+    :params="params"
+    :total-items="pagingData.totalItems"
+    :headers="headers"
+    :items="pagingData.items"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import DataTable from '@/components/geral/data-table/DataTable.vue'
+import { ProductService } from '@/services/ProductService'
+import { PageableService } from '@/services/PageableService'
 import type { HeaderDataTableType } from '@/types/DataTableType'
+import DataTable from '@/components/geral/data-table/DataTable.vue'
 
 export default defineComponent({
   name: 'ProductIndex',
@@ -32,24 +39,25 @@ export default defineComponent({
       }
     ]
 
-    return { headers }
+    const service = ProductService.init()
+
+    return { headers, service }
+  },
+  mounted() {
+    this.fetchProducts()
   },
   data() {
     return {
-      items: [
-        {
-          price: 'R$ 5,00',
-          created_at: '04/12/2022',
-          name: 'Dipirona Monoidratada',
-          description: 'Este medicamento é indicado como analgésico'
-        },
-        {
-          price: 'R$ 15,00',
-          created_at: '04/12/2022',
-          name: 'Amoxilina',
-          description: 'auxilia no tratamento de uma gama de infecções'
-        }
-      ]
+      pagingData: PageableService.receive(),
+      params: PageableService.params()
+    }
+  },
+  methods: {
+    fetchProducts() {
+      this.service
+        .paginate(this.params)
+        .then((data) => (this.pagingData = data))
+        .catch(() => window.alert('Erro ao listar produtos'))
     }
   }
 })

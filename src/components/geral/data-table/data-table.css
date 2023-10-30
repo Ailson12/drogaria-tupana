@@ -39,3 +39,24 @@
   text-align: left;
   padding: 15px 20px;
 }
+
+.table-wrapper footer {
+  gap: 1rem;
+  display: flex;
+  color: var(--c1);
+  justify-content: flex-end;
+  padding: 2rem 0 0 0;
+}
+
+.table-wrapper footer > div {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.table-wrapper footer img {
+  cursor: pointer;
+}
+
+.table-wrapper footer img:last-child {
+  transform: rotate(180deg);
+}
