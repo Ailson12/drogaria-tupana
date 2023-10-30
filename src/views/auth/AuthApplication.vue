@@ -64,6 +64,6 @@ export default defineComponent({
 }
 
 .app-wrapper .content-page {
-  padding: 40px;
+  padding: 20px 40px;
 }
 </style>

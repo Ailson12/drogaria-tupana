@@ -38,7 +38,12 @@
 .table-wrapper td,
 .table-wrapper th {
   text-align: left;
-  padding: 15px 20px;
+  padding: 0.75rem 1.125rem;
+  font-size: 0.9375rem;
+}
+
+.table-wrapper footer > p {
+  font-size: 0.8125rem;
 }
 
 .table-wrapper footer {

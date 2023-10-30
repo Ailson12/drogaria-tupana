@@ -1,13 +1,20 @@
 <template>
-  <button v-bind="$attrs" class="custom-button">
+  <button v-bind="$attrs" class="custom-button" :class="{ [size]: size }">
     <slot />
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
+
 export default defineComponent({
-  name: 'CustomButton'
+  name: 'CustomButton',
+  props: {
+    size: {
+      type: String as PropType<'medium' | 'large'>,
+      default: 'medium'
+    }
+  }
 })
 </script>
 
@@ -17,14 +24,22 @@ export default defineComponent({
   outline: 1px solid transparent;
   border: 2px solid transparent;
   transition: 0.2s;
-  font-size: 1rem;
   cursor: pointer;
   font-weight: 700;
   color: var(--cp1);
-  padding: 10px 24px;
   border-radius: 6px;
   letter-spacing: 0.5px;
   background-color: var(--cp6);
+}
+
+.custom-button.large {
+  font-size: 1rem;
+  padding: 10px 24px;
+}
+
+.custom-button.medium {
+  font-size: 14px;
+  padding: 8px 20px;
 }
 
 .custom-button:hover,

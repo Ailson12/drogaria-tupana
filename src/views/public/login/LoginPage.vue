@@ -28,7 +28,7 @@
           name="password"
           mb="0.62rem"
         />
-        <custom-button type="submit">Entrar</custom-button>
+        <custom-button type="submit" size="large">Entrar</custom-button>
       </form-wrapper>
     </div>
   </div>
@@ -71,9 +71,7 @@ export default defineComponent({
             name: 'product'
           })
         })
-        .catch(() => {
-          window.alert('Erro ao realizar login')
-        })
+        .catch(() => this.$toast.error('Erro ao realizar login'))
     }
   }
 })

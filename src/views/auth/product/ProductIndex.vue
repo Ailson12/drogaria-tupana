@@ -1,26 +1,32 @@
 <template>
-  <data-table
-    :params="params"
-    :total-items="pagingData.totalItems"
-    :headers="headers"
-    :loading="loading"
-    :items="pagingData.items"
-  />
+  <div>
+    <header-title title="Produtos" />
+    <data-table
+      :params="params"
+      :total-items="pagingData.totalItems"
+      :headers="headers"
+      :loading="loading"
+      :items="pagingData.items"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { ProductService } from '@/services/ProductService'
 import { PageableService } from '@/services/PageableService'
+import HeaderTitle from '@/components/geral/HeaderTitle.vue'
 import type { HeaderDataTableType } from '@/types/DataTableType'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 
 export default defineComponent({
   name: 'ProductIndex',
   components: {
-    DataTable
+    DataTable,
+    HeaderTitle
   },
   setup() {
+    const service = ProductService.init()
     const headers: HeaderDataTableType[] = [
       {
         title: 'Nome',
@@ -39,8 +45,6 @@ export default defineComponent({
         key: 'created_at'
       }
     ]
-
-    const service = ProductService.init()
 
     return { headers, service }
   },

@@ -71,7 +71,7 @@ export default defineComponent({
   background-color: var(--c9);
   border-radius: 6px;
   color: var(--c1);
-  padding: 0.75rem;
+  padding: 10px;
 }
 
 .group-form-item input:hover,
