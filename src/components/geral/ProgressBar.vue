@@ -12,6 +12,10 @@ export default defineComponent({
     show: {
       type: Boolean,
       default: false
+    },
+    position: {
+      type: String,
+      default: 'fixed'
     }
   }
 })
@@ -22,8 +26,10 @@ export default defineComponent({
   height: 3px;
   width: 100%;
   top: 0;
-  position: fixed;
+  left: 0;
+  right: 0;
   overflow: hidden;
+  position: v-bind(position);
   background-color: var(--cp1);
 }
 

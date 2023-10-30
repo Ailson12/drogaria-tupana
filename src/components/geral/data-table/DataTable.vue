@@ -1,5 +1,6 @@
 <template>
   <div class="table-wrapper">
+    <progress-bar :show="loading" position="absolute" />
     <table>
       <thead>
         <tr>
@@ -35,12 +36,16 @@
 </template>
 
 <script lang="ts">
+import ProgressBar from '../ProgressBar.vue'
 import { type PropType, defineComponent } from 'vue'
-import type { HeaderDataTableType } from '@/types/DataTableType'
 import type { PageableSend } from '@/types/PaginationType'
+import type { HeaderDataTableType } from '@/types/DataTableType'
 
 export default defineComponent({
   name: 'DataTable',
+  components: {
+    ProgressBar
+  },
   props: {
     params: {
       type: Object as PropType<PageableSend>,
@@ -61,6 +66,10 @@ export default defineComponent({
     items: {
       type: Array as PropType<Record<string, unknown>[]>,
       default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

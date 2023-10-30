@@ -12,6 +12,12 @@
       "price": "R$ 15,00",
       "created_at": "03/12/2022",
       "description": "Ajuda com as dores e inflamações"
+    },
+    {
+      "name": "Xarope",
+      "price": "R$ 33,50",
+      "created_at": "03/12/2022",
+      "description": "Ajuda com dor na garganta"
     }
   ],
   "posts": [

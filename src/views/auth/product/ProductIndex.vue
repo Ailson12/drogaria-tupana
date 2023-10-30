@@ -3,6 +3,7 @@
     :params="params"
     :total-items="pagingData.totalItems"
     :headers="headers"
+    :loading="loading"
     :items="pagingData.items"
   />
 </template>
@@ -48,16 +49,19 @@ export default defineComponent({
   },
   data() {
     return {
+      loading: false,
       pagingData: PageableService.receive(),
       params: PageableService.params()
     }
   },
   methods: {
     fetchProducts() {
+      this.loading = true
       this.service
         .paginate(this.params)
         .then((data) => (this.pagingData = data))
-        .catch(() => window.alert('Erro ao listar produtos'))
+        .catch(() => this.$toast.error('Erro ao listar produtos'))
+        .finally(() => (this.loading = false))
     }
   }
 })
