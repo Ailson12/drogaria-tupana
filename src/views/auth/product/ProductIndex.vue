@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-title title="Produtos" />
+    <header-title title="Produtos" :route-add="{ name: 'product.form' }" />
     <data-table
       :params="params"
       :total-items="pagingData.totalItems"

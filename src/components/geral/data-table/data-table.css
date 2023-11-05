@@ -1,52 +1,45 @@
-.table-wrapper {
-  position: relative;
-  background-color: var(--c11);
-  padding: 1rem;
-  border-radius: 6px;
-}
-
-.table-wrapper table {
+.data-table-wrapper table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.table-wrapper thead tr {
+.data-table-wrapper thead tr {
   background-color: var(--cp6);
 }
 
-.table-wrapper thead tr th {
+.data-table-wrapper thead tr th {
   color: var(--cp1);
 }
 
-.table-wrapper tbody tr {
+.data-table-wrapper tbody tr {
   color: var(--c1);
   background-color: var(--c10);
 }
 
-.table-wrapper tbody td {
+.data-table-wrapper tbody td {
   border: 1px solid var(--c9);
 }
 
-.table-wrapper tbody td:first-of-type {
+.data-table-wrapper tbody td:first-of-type {
   border-left: none;
 }
 
-.table-wrapper tbody td:last-of-type {
+.data-table-wrapper tbody td:last-of-type {
   border-right: none;
 }
 
-.table-wrapper td,
-.table-wrapper th {
+.data-table-wrapper td,
+.data-table-wrapper th {
   text-align: left;
   padding: 0.75rem 1.125rem;
   font-size: 0.9375rem;
 }
 
-.table-wrapper footer > p {
+.data-table-wrapper footer > p {
   font-size: 0.8125rem;
 }
 
-.table-wrapper footer {
+.data-table-wrapper footer {
   gap: 1rem;
   display: flex;
   color: var(--c1);
@@ -54,15 +47,15 @@
   padding: 2rem 0 0 0;
 }
 
-.table-wrapper footer > div {
+.data-table-wrapper footer > div {
   display: flex;
   gap: 1.5rem;
 }
 
-.table-wrapper footer img {
+.data-table-wrapper footer img {
   cursor: pointer;
 }
 
-.table-wrapper footer img:last-child {
+.data-table-wrapper footer img:last-child {
   transform: rotate(180deg);
 }

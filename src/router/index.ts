@@ -13,7 +13,11 @@ router.beforeEach((to, _, next) => {
   const isLoginPage = to.fullPath.includes('login')
 
   const shouldRedirect = !isAuthenticated && !to.meta.isPublic
-  const routeName = shouldRedirect ? 'login' : isAuthenticated && isLoginPage ? 'product' : null
+  const routeName = shouldRedirect
+    ? 'login'
+    : isAuthenticated && isLoginPage
+    ? 'product.index'
+    : null
 
   if (routeName) {
     next({ name: routeName })

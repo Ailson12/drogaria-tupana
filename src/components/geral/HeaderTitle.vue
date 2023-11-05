@@ -1,16 +1,18 @@
 <template>
   <div class="header-title-wrapper">
     <h1 class="c2">{{ title }}</h1>
-    <custom-button>Adicionar</custom-button>
+    <custom-button v-show="showAdd" @click="add">Adicionar</custom-button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import CustomButton from './CustomButton.vue'
+import type { RouteLocationRaw } from 'vue-router'
+import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
   name: 'HeaderTitle',
+  emits: ['add'],
   components: {
     CustomButton
   },
@@ -18,6 +20,23 @@ export default defineComponent({
     title: {
       type: String,
       required: true
+    },
+    routeAdd: {
+      default: null,
+      type: Object as PropType<RouteLocationRaw | null>
+    },
+    showAdd: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    add() {
+      if (this.routeAdd) {
+        this.$router.push(this.routeAdd)
+      } else {
+        this.$emit('add')
+      }
     }
   }
 })

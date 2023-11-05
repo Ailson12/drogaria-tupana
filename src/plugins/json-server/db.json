@@ -6,20 +6,7 @@
       "password": "$2a$10$AArY75m5tTTZy2ldwihI2uVuqQtyr4K2NaaDOo57eGswOIGgNKXAa"
     }
   ],
-  "products": [
-    {
-      "name": "Dipirona monohidratada",
-      "price": "R$ 15,00",
-      "created_at": "03/12/2022",
-      "description": "Ajuda com as dores e inflamações"
-    },
-    {
-      "name": "Xarope",
-      "price": "R$ 33,50",
-      "created_at": "03/12/2022",
-      "description": "Ajuda com dor na garganta"
-    }
-  ],
+  "products": [],
   "posts": [
     {
       "id": 1,

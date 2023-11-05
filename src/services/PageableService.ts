@@ -12,7 +12,7 @@ export class PageableService {
   static params(): PageableSend {
     return {
       _page: 1,
-      _limit: 2
+      _limit: 15
     }
   }
 }

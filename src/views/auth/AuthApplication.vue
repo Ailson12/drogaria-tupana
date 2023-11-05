@@ -5,9 +5,7 @@
     <div class="content-page">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
-          <KeepAlive>
-            <component :is="Component" />
-          </KeepAlive>
+          <component :is="Component" />
         </transition>
       </router-view>
     </div>
@@ -65,5 +63,11 @@ export default defineComponent({
 
 .app-wrapper .content-page {
   padding: 20px 40px;
+}
+
+@media (max-width: 800px) {
+  .app-wrapper .content-page {
+    padding: 15px 20px;
+  }
 }
 </style>

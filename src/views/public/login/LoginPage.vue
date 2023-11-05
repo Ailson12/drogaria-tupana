@@ -68,7 +68,7 @@ export default defineComponent({
         .then((data) => {
           this.setLogin(data)
           this.$router.push({
-            name: 'product'
+            name: 'product.index'
           })
         })
         .catch(() => this.$toast.error('Erro ao realizar login'))

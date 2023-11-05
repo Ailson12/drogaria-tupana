@@ -1,42 +1,53 @@
 <template>
-  <div class="table-wrapper">
-    <progress-bar :show="loading" position="absolute" />
-    <table>
-      <thead>
-        <tr>
-          <th
-            v-for="header in headers"
-            :key="header.key"
-            :style="{ textAlign: header.align ?? 'left' }"
-          >
-            {{ header.title }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in items" :key="index">
-          <td
-            v-for="(header, indexHeader) in headers"
-            :key="`${item[header.key]}_${indexHeader}`"
-            :style="{ textAlign: header.align }"
-          >
-            {{ item[header.key] }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <footer>
-      <p class="c3">{{ firstDisplayed }}-{{ lastViewed }} de {{ totalItems }}</p>
-      <div>
-        <img width="10" height="18" src="@/assets/icons/icon-paginator.svg" alt="icone paginacao" />
-        <img width="10" height="18" src="@/assets/icons/icon-paginator.svg" alt="icone paginacao" />
-      </div>
-    </footer>
-  </div>
+  <card-component :loading="loading">
+    <div class="data-table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th
+              v-for="header in headers"
+              :key="header.key"
+              :style="{ textAlign: header.align ?? 'left' }"
+            >
+              {{ header.title }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in items" :key="index">
+            <td
+              v-for="(header, indexHeader) in headers"
+              :key="`${item[header.key]}_${indexHeader}`"
+              :style="{ textAlign: header.align }"
+            >
+              {{ item[header.key] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <footer>
+        <p class="c3">{{ firstDisplayed }}-{{ lastViewed }} de {{ totalItems }}</p>
+        <div>
+          <img
+            width="10"
+            height="18"
+            src="@/assets/icons/icon-paginator.svg"
+            alt="icone paginacao"
+          />
+          <img
+            width="10"
+            height="18"
+            src="@/assets/icons/icon-paginator.svg"
+            alt="icone paginacao"
+          />
+        </div>
+      </footer>
+    </div>
+  </card-component>
 </template>
 
 <script lang="ts">
-import ProgressBar from '../ProgressBar.vue'
+import CardComponent from '../CardComponent.vue'
 import { type PropType, defineComponent } from 'vue'
 import type { PageableSend } from '@/types/PaginationType'
 import type { HeaderDataTableType } from '@/types/DataTableType'
@@ -44,7 +55,7 @@ import type { HeaderDataTableType } from '@/types/DataTableType'
 export default defineComponent({
   name: 'DataTable',
   components: {
-    ProgressBar
+    CardComponent
   },
   props: {
     params: {
@@ -53,7 +64,7 @@ export default defineComponent({
     },
     itemsPerPage: {
       type: Number,
-      default: 10
+      default: 15
     },
     totalItems: {
       type: Number,

@@ -1,7 +1,8 @@
 <template>
   <div class="group-form-item">
     <label :for="name">{{ label }}</label>
-    <input v-on="handlers" :type="type" :id="name" :value="value" v-bind="$attrs" />
+    <textarea v-if="isTextArea" v-on="handlers" :id="name" rows="5" v-bind="$attrs"></textarea>
+    <input v-else v-on="handlers" :type="type" :id="name" :value="value" v-bind="$attrs" />
     <span class="message-error" :style="{ opacity: errorMessage?.length ? 1 : 0 }">
       {{ errorMessage }}
     </span>
@@ -45,6 +46,11 @@ export default defineComponent({
     })
 
     return { value, handlers, errorMessage }
+  },
+  computed: {
+    isTextArea() {
+      return this.type.includes('textarea')
+    }
   }
 })
 </script>
@@ -63,7 +69,8 @@ export default defineComponent({
   cursor: pointer;
 }
 
-.group-form-item input {
+.group-form-item input,
+.group-form-item textarea {
   outline: 0;
   font-size: 0.875rem;
   transition: 0.2s;
@@ -74,8 +81,14 @@ export default defineComponent({
   padding: 10px;
 }
 
+.group-form-item textarea {
+  resize: none;
+}
+
+.group-form-item textarea:hover,
 .group-form-item input:hover,
-.group-form-item input:focus-visible {
+.group-form-item input:focus-visible,
+.group-form-item textarea :focus-visible {
   border-color: var(--cp2);
 }
 
