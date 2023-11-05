@@ -20,7 +20,14 @@
               :key="`${item[header.key]}_${indexHeader}`"
               :style="{ textAlign: header.align }"
             >
-              {{ item[header.key] }}
+              <slot
+                v-if="slotNames.includes(header.key)"
+                :name="header.key"
+                :item="{ value: item[header.key] }"
+              />
+              <span v-else>
+                {{ item[header.key] }}
+              </span>
             </td>
           </tr>
         </tbody>
@@ -84,6 +91,9 @@ export default defineComponent({
     }
   },
   computed: {
+    slotNames() {
+      return Object.keys(this.$slots)
+    },
     firstDisplayed() {
       return this.lastViewed > 0 ? this.lastViewed - this.items.length + 1 : 0
     },

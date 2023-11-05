@@ -7,12 +7,20 @@
       :headers="headers"
       :loading="loading"
       :items="pagingData.items"
-    />
+    >
+      <template #price="{ item }">
+        {{ formatMoney(item.value) }}
+      </template>
+      <template #created_at="{ item }">
+        {{ new Date(item.value).toLocaleString() }}
+      </template>
+    </data-table>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { formatMoney } from '@/helpers/money.helper'
 import { ProductService } from '@/services/ProductService'
 import { PageableService } from '@/services/PageableService'
 import HeaderTitle from '@/components/geral/HeaderTitle.vue'
@@ -46,7 +54,7 @@ export default defineComponent({
       }
     ]
 
-    return { headers, service }
+    return { headers, service, formatMoney }
   },
   mounted() {
     this.fetchProducts()
