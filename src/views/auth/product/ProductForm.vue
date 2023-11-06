@@ -19,12 +19,12 @@
 import { defineComponent } from 'vue'
 import { validationSchema } from './validation'
 import { Form as FormWrapper } from 'vee-validate'
-import { generateUUID } from '@/helpers/uuid.helper'
 import TextField from '@/components/form/TextField.vue'
+import { generateUUID } from '@/helpers/uuid/uuid.helper'
+import { ProductService } from '@/services/ProductService'
 import HeaderTitle from '@/components/geral/HeaderTitle.vue'
 import CustomButton from '@/components/geral/CustomButton.vue'
 import CardComponent from '@/components/geral/CardComponent.vue'
-import { ProductService } from '@/services/ProductService'
 
 export default defineComponent({
   name: 'ProductForm',

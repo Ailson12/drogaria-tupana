@@ -1,6 +1,6 @@
 import { api } from '@/utils/api'
 import type { DataLoginType } from '@/types/AuthType'
-import { errorCallback } from '@/helpers/service.helper'
+import { errorCallback } from '@/helpers/service/service.helper'
 
 type ParamsLogin = {
   email: string

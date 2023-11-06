@@ -1,6 +1,6 @@
 import { api } from '@/utils/api'
 import type { AxiosInstance } from 'axios'
-import { errorCallback } from '@/helpers/service.helper'
+import { errorCallback } from '@/helpers/service/service.helper'
 import type { PageableSend } from '@/types/PaginationType'
 import type { PageableReceiveType } from '../types/PaginationType'
 
