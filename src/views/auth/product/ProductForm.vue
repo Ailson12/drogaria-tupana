@@ -79,3 +79,4 @@ export default defineComponent({
   }
 }
 </style>
+@/helpers/uuid/uuid.helper
