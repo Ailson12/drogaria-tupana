@@ -1,4 +1,4 @@
-import { api } from '@/utils/api'
+import { api } from '@/config/api'
 import type { AxiosInstance } from 'axios'
 import { errorCallback } from '@/helpers/service/service.helper'
 import type { PageableSend } from '@/types/PaginationType'

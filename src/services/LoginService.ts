@@ -1,4 +1,4 @@
-import { api } from '@/utils/api'
+import { api } from '@/config/api'
 import type { DataLoginType } from '@/types/AuthType'
 import { errorCallback } from '@/helpers/service/service.helper'
 

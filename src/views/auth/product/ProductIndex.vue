@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { formatMoney } from '@/helpers/money.helper'
+import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/ProductService'
 import { PageableService } from '@/services/PageableService'
 import HeaderTitle from '@/components/geral/HeaderTitle.vue'

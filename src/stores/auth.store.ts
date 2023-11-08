@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     logout() {
-      this.dataLogin = {} as DataLoginType
+      this.setLogin({} as DataLoginType)
       router.push({
         name: 'login'
       })

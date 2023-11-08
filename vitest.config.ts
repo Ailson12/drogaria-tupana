@@ -11,7 +11,7 @@ export default mergeConfig(
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {
         all: true,
-        include: ['src/helpers/*'],
+        include: ['src/helpers/*', 'src/components'],
         reporter: ['text', 'json', 'html']
       }
     }

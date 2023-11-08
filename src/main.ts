@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { setLocale } from 'yup'
 import { createPinia } from 'pinia'
-import { messages } from './utils/yup-messages'
+import { messages } from './config/yup-messages'
 
 import App from './App.vue'
 import router from './router'
