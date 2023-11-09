@@ -27,18 +27,26 @@ export default defineComponent({
       type: String,
       required: true
     },
+    initialError: {
+      type: String,
+      required: false
+    },
     mb: {
       type: String
     }
   },
   setup(props) {
-    const { value, errorMessage, handleChange, handleBlur } = useField(
+    const { value, errorMessage, setErrors, handleChange, handleBlur } = useField(
       toRef(props, 'name'),
       undefined,
       {
         validateOnValueUpdate: false
       }
     )
+
+    if (props.initialError) {
+      setErrors(props.initialError)
+    }
 
     const handlers = ref({
       blur: handleBlur,

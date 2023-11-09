@@ -52,6 +52,37 @@ describe('TextField Component', () => {
     expect(wrapper.find('textarea').exists()).toBe(false)
   })
 
+  it('should display a span when there are validation errors', () => {
+    const initialError = 'Campo obrigatório'
+    const { wrapper } = mountFactory({
+      props: {
+        name: 'name',
+        initialError
+      }
+    })
+
+    const span = wrapper.find('span')
+
+    expect(span.exists()).toBe(true)
+    expect(span.text().length > 0).toBe(true)
+    expect(span.text()).toEqual(initialError)
+  })
+
+  it('validation span should have a capacity equal to 1 when there is an error', () => {
+    const initialError = 'Campo obrigatório'
+    const { wrapper } = mountFactory({
+      props: {
+        name: 'name',
+        initialError
+      }
+    })
+
+    const span = wrapper.find('span')
+    const opacity = +span.element.style.opacity
+
+    expect(opacity).toBe(1)
+  })
+
   it('should contain an error message class', () => {
     const { wrapper } = mountFactory()
     expect(wrapper.find('span').classes().includes('message-error')).toBe(true)
