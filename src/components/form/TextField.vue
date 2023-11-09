@@ -25,7 +25,7 @@ export default defineComponent({
     },
     name: {
       type: String,
-      default: ''
+      required: true
     },
     mb: {
       type: String
