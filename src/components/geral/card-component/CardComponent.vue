@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ProgressBar from './ProgressBar.vue'
+import ProgressBar from '../progress-bar/ProgressBar.vue'
 
 export default defineComponent({
   name: 'CardComponent',

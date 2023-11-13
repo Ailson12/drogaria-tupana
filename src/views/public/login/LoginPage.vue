@@ -41,7 +41,7 @@ import { useAuthStore } from '@/stores/auth.store'
 import { validationSchema } from './utils/validation'
 import { LoginService } from '@/services/LoginService'
 import TextField from '@/components/form/TextField.vue'
-import CustomButton from '@/components/geral/CustomButton.vue'
+import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 import { Form as FormWrapper, type GenericObject } from 'vee-validate'
 
 export default defineComponent({

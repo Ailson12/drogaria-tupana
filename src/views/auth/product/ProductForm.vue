@@ -23,8 +23,8 @@ import TextField from '@/components/form/TextField.vue'
 import { generateUUID } from '@/helpers/uuid/uuid.helper'
 import { ProductService } from '@/services/ProductService'
 import HeaderTitle from '@/components/geral/HeaderTitle.vue'
-import CustomButton from '@/components/geral/CustomButton.vue'
-import CardComponent from '@/components/geral/CardComponent.vue'
+import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
+import CardComponent from '@/components/geral/card-component/CardComponent.vue'
 
 export default defineComponent({
   name: 'ProductForm',

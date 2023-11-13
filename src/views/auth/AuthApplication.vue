@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import NavBar from '@/components/layout/NavBar.vue'
-import ProgressBar from '@/components/geral/ProgressBar.vue'
+import ProgressBar from '@/components/geral/progress-bar/ProgressBar.vue'
 
 export default defineComponent({
   name: 'AuthApplication',

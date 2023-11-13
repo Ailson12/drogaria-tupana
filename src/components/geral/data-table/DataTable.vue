@@ -54,9 +54,9 @@
 </template>
 
 <script lang="ts">
-import CardComponent from '../CardComponent.vue'
 import { type PropType, defineComponent } from 'vue'
 import type { PageableSend } from '@/types/PaginationType'
+import CardComponent from '../card-component/CardComponent.vue'
 import type { HeaderDataTableType } from '@/types/DataTableType'
 
 export default defineComponent({

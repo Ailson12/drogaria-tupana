@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts">
-import CustomButton from './CustomButton.vue'
 import type { RouteLocationRaw } from 'vue-router'
 import { defineComponent, type PropType } from 'vue'
+import CustomButton from './custom-button/CustomButton.vue'
 
 export default defineComponent({
   name: 'HeaderTitle',
