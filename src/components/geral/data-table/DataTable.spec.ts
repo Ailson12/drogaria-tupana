@@ -1,10 +1,20 @@
 import { mount } from '@vue/test-utils'
 import DataTable from './DataTable.vue'
-import { describe, expect, it } from 'vitest'
 import type { PageableSend } from '@/types/PaginationType'
+import { describe, expect, it, vi, type Mock } from 'vitest'
 import type { HeaderDataTableType } from '@/types/DataTableType'
+import type { GlobalMountOptions } from 'node_modules/@vue/test-utils/dist/types'
 
-const mountFactory = () => {
+type MountProps = {
+  headers?: HeaderDataTableType[]
+}
+
+type MountParams = {
+  props?: MountProps
+  global?: GlobalMountOptions
+}
+
+const mountFactory = ({ props }: MountParams = {}) => {
   const params: PageableSend = {
     _limit: 15,
     _page: 1
@@ -26,10 +36,15 @@ const mountFactory = () => {
     }
   ]
 
+  const propsDefault = {
+    params,
+    headers
+  }
+
   const wrapper = mount(DataTable, {
     props: {
-      params,
-      headers
+      ...propsDefault,
+      ...props
     }
   })
 
@@ -37,8 +52,6 @@ const mountFactory = () => {
 }
 
 describe('DataTable Component', () => {
-  it.todo('should validate if the key property is repeated')
-
   it('should mount the component', () => {
     const { wrapper } = mountFactory()
     expect(wrapper.vm).toBeTruthy()
@@ -62,5 +75,34 @@ describe('DataTable Component', () => {
 
     expect(actionsHeader?.exists()).toBe(true)
     expect(actionsHeader?.element.style.textAlign).toEqual('right')
+  })
+
+  it('should validate if the key property is repeated ', () => {
+    const originalConsoleWarn = console.warn
+    console.warn = vi.fn()
+
+    const duplicateHeader = [
+      {
+        key: 'name',
+        title: 'Nome'
+      },
+      {
+        key: 'name',
+        title: 'Nome Completo'
+      }
+    ]
+
+    mountFactory({
+      props: {
+        headers: duplicateHeader
+      }
+    })
+
+    const warnMessage = (console.warn as Mock).mock.calls[0]?.at(0) ?? ''
+    expect(warnMessage).toContain(
+      '[Vue warn]: Invalid prop: custom validator check failed for prop "headers"'
+    )
+
+    console.warn = originalConsoleWarn
   })
 })
