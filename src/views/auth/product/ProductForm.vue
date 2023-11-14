@@ -22,7 +22,7 @@ import { Form as FormWrapper } from 'vee-validate'
 import TextField from '@/components/form/TextField.vue'
 import { generateUUID } from '@/helpers/uuid/uuid.helper'
 import { ProductService } from '@/services/ProductService'
-import HeaderTitle from '@/components/geral/HeaderTitle.vue'
+import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 import CardComponent from '@/components/geral/card-component/CardComponent.vue'
 

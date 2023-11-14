@@ -23,9 +23,9 @@ import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/ProductService'
 import { PageableService } from '@/services/PageableService'
-import HeaderTitle from '@/components/geral/HeaderTitle.vue'
 import type { HeaderDataTableType } from '@/types/DataTableType'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
+import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 
 export default defineComponent({
   name: 'ProductIndex',

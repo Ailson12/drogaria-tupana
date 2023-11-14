@@ -1,14 +1,14 @@
 <template>
   <div class="header-title-wrapper">
     <h1 class="c2">{{ title }}</h1>
-    <custom-button v-show="showAdd" @click="add">Adicionar</custom-button>
+    <custom-button v-if="showAdd" @click="add">Adicionar</custom-button>
   </div>
 </template>
 
 <script lang="ts">
 import type { RouteLocationRaw } from 'vue-router'
 import { defineComponent, type PropType } from 'vue'
-import CustomButton from './custom-button/CustomButton.vue'
+import CustomButton from '../custom-button/CustomButton.vue'
 
 export default defineComponent({
   name: 'HeaderTitle',
