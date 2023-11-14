@@ -6,6 +6,7 @@
       @click="confirmLogout"
       width="28"
       height="28"
+      id="icon-logout"
       alt="icon logout"
     />
   </div>
