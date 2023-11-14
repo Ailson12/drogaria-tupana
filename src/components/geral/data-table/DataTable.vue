@@ -54,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import { uniqBy } from 'lodash'
 import { type PropType, defineComponent } from 'vue'
 import type { PageableSend } from '@/types/PaginationType'
 import CardComponent from '../card-component/CardComponent.vue'
@@ -79,7 +80,11 @@ export default defineComponent({
     },
     headers: {
       type: Array as PropType<HeaderDataTableType[]>,
-      required: true
+      required: true,
+      validator(value: HeaderDataTableType[]) {
+        const valuesUnique = uniqBy(value, 'key')
+        return valuesUnique.length === value.length
+      }
     },
     items: {
       type: Array as PropType<Record<string, unknown>[]>,
