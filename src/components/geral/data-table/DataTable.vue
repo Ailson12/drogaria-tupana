@@ -87,8 +87,8 @@ export default defineComponent({
       }
     },
     items: {
-      type: Array as PropType<Record<string, unknown>[]>,
-      default: () => []
+      required: true,
+      type: Array as PropType<Record<string, unknown>[]>
     },
     loading: {
       type: Boolean,
