@@ -13,6 +13,7 @@ type MountProps = {
 
 type MountParams = {
   props?: MountProps
+  slots?: Record<string, string>
   global?: GlobalMountOptions
 }
 const pageableParams: PageableSend = {
@@ -20,7 +21,7 @@ const pageableParams: PageableSend = {
   _page: 1
 }
 
-const mountFactory = ({ props }: MountParams = {}) => {
+const mountFactory = ({ props, slots }: MountParams = {}) => {
   const headers: HeaderDataTableType[] = [
     {
       key: 'name',
@@ -37,19 +38,39 @@ const mountFactory = ({ props }: MountParams = {}) => {
     }
   ]
 
+  const items = [
+    {
+      name: 'Mateus',
+      age: 20
+    },
+    {
+      name: 'Pedro',
+      age: 24
+    },
+    {
+      name: 'Lucas',
+      age: 33
+    }
+  ]
+
+  const totalItems = items.length
+
   const propsDefault = {
-    params: pageableParams,
-    headers
+    items,
+    headers,
+    params: pageableParams
   }
 
   const wrapper = mount(DataTable, {
+    slots,
     props: {
       ...propsDefault,
+      totalItems,
       ...props
     }
   })
 
-  return { wrapper, headers, params: pageableParams }
+  return { wrapper, totalItems, items, headers, params: pageableParams }
 }
 
 describe('DataTable', () => {
@@ -111,35 +132,7 @@ describe('DataTable', () => {
 
   describe('DataTable Body', () => {
     it('should render the content correctly in the table body', () => {
-      const headers: HeaderDataTableType[] = [
-        {
-          key: 'name',
-          title: 'Nome'
-        },
-        {
-          key: 'age',
-          title: 'Idade'
-        }
-      ]
-
-      const items = [
-        {
-          name: 'Mateus',
-          age: 23
-        },
-        {
-          name: 'Pedro',
-          age: 20
-        }
-      ]
-
-      const wrapper = mount(DataTable, {
-        props: {
-          items,
-          headers,
-          params: pageableParams
-        }
-      })
+      const { wrapper, items } = mountFactory()
 
       const body = wrapper.find('tbody')
       const rows = body.findAll('tr')
@@ -147,45 +140,18 @@ describe('DataTable', () => {
       const firstRow = rows.at(0)
 
       expect(firstRow?.text()).toContain('Mateus')
-      expect(firstRow?.text()).toContain('23')
+      expect(firstRow?.text()).toContain('20')
       expect(rows).toHaveLength(items.length)
     })
 
     it('should correctly render slot', () => {
-      const headers: HeaderDataTableType[] = [
-        {
-          key: 'name',
-          title: 'Nome'
-        },
-        {
-          key: 'age',
-          title: 'Idade'
-        }
-      ]
-
-      const items = [
-        {
-          name: 'Mateus',
-          age: 23
-        },
-        {
-          name: 'Pedro',
-          age: 20
-        }
-      ]
-
-      const wrapper = mount(DataTable, {
+      const { wrapper } = mountFactory({
         slots: {
           name: `<template #name="{ item }">
             <div class="slot-customizing-name">
               customizing name {{ item.value }}
             </div>
           </template>`
-        },
-        props: {
-          items,
-          headers,
-          params: pageableParams
         }
       })
 
@@ -205,25 +171,7 @@ describe('DataTable', () => {
     })
 
     it('should display total items in the footer', () => {
-      const items = [
-        {
-          name: 'Mateus',
-          age: 20
-        },
-        {
-          name: 'Pedro',
-          age: 26
-        }
-      ]
-
-      const totalItems = items.length
-
-      const { wrapper } = mountFactory({
-        props: {
-          items,
-          totalItems
-        }
-      })
+      const { wrapper, totalItems } = mountFactory()
 
       const footer = wrapper.find('footer')
       const footerText = footer.find('p').text()
