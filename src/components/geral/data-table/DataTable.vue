@@ -1,37 +1,43 @@
 <template>
   <card-component :loading="loading">
     <div class="data-table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th
-              v-for="header in headers"
-              :key="header.key"
-              :style="{ textAlign: header.align ?? 'left' }"
-            >
-              {{ header.title }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in items" :key="index">
-            <td
-              v-for="(header, indexHeader) in headers"
-              :key="`${item[header.key]}_${indexHeader}`"
-              :style="{ textAlign: header.align }"
-            >
-              <slot
-                v-if="slotNames.includes(header.key)"
-                :name="header.key"
-                :item="{ value: item[header.key] }"
-              />
-              <span v-else>
-                {{ item[header.key] }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th
+                v-for="header in headers"
+                :key="header.key"
+                :style="{
+                  width: header.width,
+                  minWidth: header.minWidth,
+                  textAlign: header.align ?? 'left'
+                }"
+              >
+                {{ header.title }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in items" :key="index">
+              <td
+                v-for="(header, indexHeader) in headers"
+                :key="`${item[header.key]}_${indexHeader}`"
+                :style="{ textAlign: header.align, width: header.width, minWidth: header.minWidth }"
+              >
+                <slot
+                  v-if="slotNames.includes(header.key)"
+                  :name="header.key"
+                  :item="{ value: item[header.key] }"
+                />
+                <div v-else>
+                  {{ item[header.key] }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <footer>
         <p class="c3">{{ firstDisplayed }}-{{ lastViewed }} de {{ pagingData.totalItems }}</p>
         <div>

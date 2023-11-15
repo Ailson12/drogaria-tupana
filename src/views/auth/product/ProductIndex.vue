@@ -38,19 +38,23 @@ export default defineComponent({
     const headers: HeaderDataTableType[] = [
       {
         title: 'Nome',
-        key: 'name'
+        key: 'name',
+        minWidth: '180px'
       },
       {
         title: 'Descrição',
-        key: 'description'
+        key: 'description',
+        minWidth: '180px'
       },
       {
         title: 'Preço',
-        key: 'price'
+        key: 'price',
+        width: '150px'
       },
       {
         title: 'Data de criação',
-        key: 'created_at'
+        key: 'created_at',
+        width: '200px'
       }
     ]
 

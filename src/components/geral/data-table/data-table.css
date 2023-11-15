@@ -1,3 +1,7 @@
+.data-table-wrapper > div {
+  overflow: auto;
+}
+
 .data-table-wrapper table {
   width: 100%;
   border-collapse: collapse;
