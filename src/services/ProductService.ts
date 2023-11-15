@@ -1,7 +1,7 @@
 import { api } from '@/config/api'
 import type { AxiosInstance } from 'axios'
-import { errorCallback } from '@/helpers/service/service.helper'
 import type { PageableSend } from '@/types/PaginationType'
+import { errorCallback } from '@/helpers/service/service.helper'
 import type { PageableReceiveType } from '../types/PaginationType'
 
 export class ProductService {
@@ -19,7 +19,9 @@ export class ProductService {
       .catch(errorCallback)
   }
 
-  paginate(params: PageableSend) {
+  paginate({ _page = 1, _limit = 15 }: PageableSend = {}) {
+    const params = { _page, _limit }
+
     return this.http
       .get(this.baseUrl, {
         params

@@ -2,11 +2,10 @@
   <div>
     <header-title title="Produtos" :route-add="{ name: 'product.form' }" />
     <data-table
-      :params="params"
-      :total-items="pagingData.totalItems"
       :headers="headers"
       :loading="loading"
-      :items="pagingData.items"
+      :pagingData="pagingData"
+      @change-page="fetchProducts"
     >
       <template #price="{ item }">
         {{ formatMoney(item.value) }}
@@ -22,6 +21,7 @@
 import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/ProductService'
+import type { PageableSend } from '@/types/PaginationType'
 import { PageableService } from '@/services/PageableService'
 import type { HeaderDataTableType } from '@/types/DataTableType'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
@@ -62,15 +62,14 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      pagingData: PageableService.receive(),
-      params: PageableService.params()
+      pagingData: PageableService.receive()
     }
   },
   methods: {
-    fetchProducts() {
+    fetchProducts(params?: PageableSend) {
       this.loading = true
       this.service
-        .paginate(this.params)
+        .paginate(params)
         .then((data) => (this.pagingData = data))
         .catch(() => this.$toast.error('Erro ao listar produtos'))
         .finally(() => (this.loading = false))
@@ -78,4 +77,3 @@ export default defineComponent({
   }
 })
 </script>
-@/helpers/money/money.helper

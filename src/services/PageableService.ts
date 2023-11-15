@@ -1,4 +1,4 @@
-import type { PageableReceiveType, PageableSend } from '@/types/PaginationType'
+import type { PageableReceiveType } from '@/types/PaginationType'
 
 export class PageableService {
   static receive() {
@@ -7,12 +7,5 @@ export class PageableService {
       totalItems: 0,
       totalPages: 0
     } as PageableReceiveType
-  }
-
-  static params(): PageableSend {
-    return {
-      _page: 1,
-      _limit: 15
-    }
   }
 }

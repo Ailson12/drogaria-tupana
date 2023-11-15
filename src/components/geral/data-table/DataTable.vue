@@ -33,17 +33,21 @@
         </tbody>
       </table>
       <footer>
-        <p class="c3">{{ firstDisplayed }}-{{ lastViewed }} de {{ totalItems }}</p>
+        <p class="c3">{{ firstDisplayed }}-{{ lastViewed }} de {{ pagingData.totalItems }}</p>
         <div>
           <img
             width="10"
             height="18"
+            @click="previous"
+            data-control="previous"
             src="@/assets/icons/icon-paginator.svg"
             alt="icone paginacao"
           />
           <img
             width="10"
             height="18"
+            @click="next"
+            data-control="next"
             src="@/assets/icons/icon-paginator.svg"
             alt="icone paginacao"
           />
@@ -56,27 +60,24 @@
 <script lang="ts">
 import { uniqBy } from 'lodash'
 import { type PropType, defineComponent } from 'vue'
-import type { PageableSend } from '@/types/PaginationType'
 import CardComponent from '../card-component/CardComponent.vue'
 import type { HeaderDataTableType } from '@/types/DataTableType'
+import type { PageableReceiveType, PageableSend } from '@/types/PaginationType'
 
 export default defineComponent({
   name: 'DataTable',
+  emits: ['change-page'],
   components: {
     CardComponent
   },
   props: {
-    params: {
-      type: Object as PropType<PageableSend>,
-      required: true
+    pagingData: {
+      required: true,
+      type: Object as PropType<PageableReceiveType>
     },
-    itemsPerPage: {
+    limit: {
       type: Number,
       default: 15
-    },
-    totalItems: {
-      type: Number,
-      default: 0
     },
     headers: {
       type: Array as PropType<HeaderDataTableType[]>,
@@ -86,13 +87,14 @@ export default defineComponent({
         return valuesUnique.length === value.length
       }
     },
-    items: {
-      required: true,
-      type: Array as PropType<Record<string, unknown>[]>
-    },
     loading: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      page: 1
     }
   },
   computed: {
@@ -103,7 +105,33 @@ export default defineComponent({
       return this.lastViewed > 0 ? this.lastViewed - this.items.length + 1 : 0
     },
     lastViewed() {
-      return (this.params._page - 1) * this.itemsPerPage + this.items.length
+      return (this.page - 1) * this.limit + this.items.length
+    },
+    items() {
+      return this.pagingData.items
+    }
+  },
+  methods: {
+    getNewPage(): PageableSend {
+      return {
+        _page: this.page,
+        _limit: this.limit
+      }
+    },
+    reloadChangePage(): void {
+      this.$emit('change-page', this.getNewPage())
+    },
+    next(): void {
+      if (this.page < this.pagingData.totalPages) {
+        this.page += 1
+        this.reloadChangePage()
+      }
+    },
+    previous(): void {
+      if (this.page > 1) {
+        this.page -= 1
+        this.reloadChangePage()
+      }
     }
   }
 })

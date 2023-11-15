@@ -1,24 +1,20 @@
 import { mount } from '@vue/test-utils'
 import DataTable from './DataTable.vue'
-import type { PageableSend } from '@/types/PaginationType'
 import { describe, expect, it, vi, type Mock } from 'vitest'
 import type { HeaderDataTableType } from '@/types/DataTableType'
+import type { PageableReceiveType } from '@/types/PaginationType'
 import type { GlobalMountOptions } from 'node_modules/@vue/test-utils/dist/types'
 
 type MountProps = {
-  totalItems?: number
-  headers?: HeaderDataTableType[]
+  totalPages?: number
   items?: Record<string, unknown>[]
+  headers?: HeaderDataTableType[]
 }
 
 type MountParams = {
   props?: MountProps
   slots?: Record<string, string>
   global?: GlobalMountOptions
-}
-const pageableParams: PageableSend = {
-  _limit: 15,
-  _page: 1
 }
 
 const mountFactory = ({ props, slots }: MountParams = {}) => {
@@ -53,24 +49,28 @@ const mountFactory = ({ props, slots }: MountParams = {}) => {
     }
   ]
 
-  const totalItems = items.length
+  const totalItems = (props?.items || items).length
+
+  const pagingData: PageableReceiveType = {
+    totalItems,
+    items: props?.items || items,
+    totalPages: props?.totalPages || 1
+  }
 
   const propsDefault = {
-    items,
     headers,
-    params: pageableParams
+    pagingData
   }
 
   const wrapper = mount(DataTable, {
     slots,
     props: {
       ...propsDefault,
-      totalItems,
       ...props
     }
   })
 
-  return { wrapper, totalItems, items, headers, params: pageableParams }
+  return { wrapper, totalItems, items, headers }
 }
 
 describe('DataTable', () => {
@@ -185,6 +185,40 @@ describe('DataTable', () => {
       const icons = footer.findAll('img')
 
       expect(icons).toHaveLength(2)
+    })
+
+    it('should display the text in the zeroed footer when the "items" property is empty', () => {
+      const { wrapper } = mountFactory({
+        props: {
+          items: []
+        }
+      })
+      const footerText = wrapper.find('footer p')
+
+      expect(footerText.text()).toEqual('0-0 de 0')
+      expect(wrapper.vm.firstDisplayed).toBe(0)
+    })
+
+    it('should emit the "change-page" event when clicking on a pagination button', async () => {
+      const { wrapper } = mountFactory({
+        props: {
+          totalPages: 2
+        }
+      })
+
+      const footer = wrapper.find('footer')
+      const next = footer.find('img[data-control="next"]')
+      const previous = footer.find('img[data-control="previous"]')
+
+      await next.trigger('click')
+      expect(wrapper.emitted()).toHaveProperty('change-page')
+      expect(wrapper.emitted('change-page')).toHaveLength(1)
+      expect(wrapper.emitted('change-page')?.at(0)).toEqual([{ _page: 2, _limit: 15 }])
+
+      await previous.trigger('click')
+      expect(wrapper.emitted()).toHaveProperty('change-page')
+      expect(wrapper.emitted('change-page')).toHaveLength(2)
+      expect(wrapper.emitted('change-page')?.at(1)).toEqual([{ _page: 1, _limit: 15 }])
     })
   })
 })
