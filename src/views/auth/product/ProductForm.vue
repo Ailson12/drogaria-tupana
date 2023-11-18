@@ -2,10 +2,17 @@
   <div>
     <header-title :show-add="false" title="Formulário de produto" />
     <card-component :loading="loading">
-      <form-wrapper :ref="refForm" @submit="onFinish" :validation-schema="validationSchema">
+      <form-wrapper
+        :initial-values="{
+          price: '0'
+        }"
+        :ref="refForm"
+        @submit="onFinish"
+        :validation-schema="validationSchema"
+      >
         <div class="row-1">
           <text-field label="Nome" name="name" />
-          <text-field label="Preço" name="price" type="number" />
+          <text-field label="Preço" name="price" type="money" />
         </div>
         <text-field label="Descrição" name="description" type="textarea" />
 
@@ -19,9 +26,10 @@
 import { defineComponent } from 'vue'
 import { validationSchema } from './validation'
 import { Form as FormWrapper } from 'vee-validate'
-import TextField from '@/components/form/TextField.vue'
 import { generateUUID } from '@/helpers/uuid/uuid.helper'
 import { ProductService } from '@/services/ProductService'
+import TextField from '@/components/form/text-field/TextField.vue'
+import { clearMoneyFormatting } from '@/helpers/money/money.helper'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 import CardComponent from '@/components/geral/card-component/CardComponent.vue'
@@ -51,7 +59,7 @@ export default defineComponent({
     onFinish(values: Record<string, unknown>) {
       this.loading = true
       this.service
-        .create(values)
+        .create({ ...values, price: clearMoneyFormatting(values.price as string) })
         .then(() => {
           this.$toast.success('Produto salvo com sucesso')
           this.$router.push({

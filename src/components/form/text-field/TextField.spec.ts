@@ -87,4 +87,20 @@ describe('TextField Component', () => {
     const { wrapper } = mountFactory()
     expect(wrapper.find('span').classes().includes('message-error')).toBe(true)
   })
+
+  it('should render input with money mask when the type is equal to "money"', () => {
+    const { wrapper } = mountFactory({
+      props: {
+        name: 'price',
+        type: 'money'
+      }
+    })
+
+    const input = wrapper.find('input')
+    input.setValue('250,00')
+
+    const { value } = input.element
+
+    expect(value).toBe('R$ 250,00')
+  })
 })

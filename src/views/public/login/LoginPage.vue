@@ -40,9 +40,9 @@ import { defineComponent } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { validationSchema } from './utils/validation'
 import { LoginService } from '@/services/LoginService'
-import TextField from '@/components/form/TextField.vue'
-import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
+import TextField from '@/components/form/text-field/TextField.vue'
 import { Form as FormWrapper, type GenericObject } from 'vee-validate'
+import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 
 export default defineComponent({
   name: 'LoginPage',

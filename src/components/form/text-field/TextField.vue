@@ -1,7 +1,8 @@
 <template>
   <div class="group-form-item">
     <label :for="name">{{ label }}</label>
-    <textarea v-if="isTextArea" v-on="handlers" :id="name" rows="5" v-bind="$attrs"></textarea>
+    <input v-if="isMoney" :value="value" :id="name" v-money3="moneyConfig" v-on="handlers" />
+    <textarea v-else-if="isTextArea" v-on="handlers" :id="name" rows="5" v-bind="$attrs"></textarea>
     <input v-else v-on="handlers" :type="type" :id="name" :value="value" v-bind="$attrs" />
     <span class="message-error" :style="{ opacity: errorMessage?.length ? 1 : 0 }">
       {{ errorMessage }}
@@ -11,10 +12,14 @@
 
 <script lang="ts">
 import { useField } from 'vee-validate'
+import { Money3Directive } from 'v-money3'
 import { defineComponent, ref, toRef } from 'vue'
 
 export default defineComponent({
   name: 'TextField',
+  directives: {
+    money3: Money3Directive
+  },
   props: {
     type: {
       type: String,
@@ -53,9 +58,20 @@ export default defineComponent({
       input: handleChange
     })
 
-    return { value, handlers, errorMessage }
+    const moneyConfig = {
+      decimal: ',',
+      thousands: '.',
+      prefix: 'R$ ',
+      precision: 2,
+      masked: false
+    }
+
+    return { value, moneyConfig, handlers, errorMessage }
   },
   computed: {
+    isMoney() {
+      return this.type.includes('money')
+    },
     isTextArea() {
       return this.type.includes('textarea')
     }
@@ -63,49 +79,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.group-form-item {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: v-bind(mb);
-}
-
-.group-form-item label {
-  color: var(--c1);
-  font-size: 1rem;
-  margin-bottom: 4px;
-  cursor: pointer;
-}
-
-.group-form-item input,
-.group-form-item textarea {
-  outline: 0;
-  font-size: 0.875rem;
-  transition: 0.2s;
-  border: 2px solid transparent;
-  background-color: var(--c9);
-  border-radius: 6px;
-  color: var(--c1);
-  padding: 10px;
-}
-
-.group-form-item textarea {
-  resize: none;
-}
-
-.group-form-item textarea:hover,
-.group-form-item input:hover,
-.group-form-item input:focus-visible,
-.group-form-item textarea :focus-visible {
-  border-color: var(--cp2);
-}
-
-.message-error {
-  opacity: 0;
-  transition: 0.1s;
-  color: #ff380b;
-  margin-top: 2px;
-  font-size: 12px;
-  min-height: 22px;
-}
-</style>
+<style scoped src="./text-field.css" />
