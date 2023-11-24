@@ -23,11 +23,16 @@
               <td
                 v-for="(header, indexHeader) in headers"
                 :key="`${item[header.key]}_${indexHeader}`"
-                :style="{ textAlign: header.align, width: header.width, minWidth: header.minWidth }"
+                :style="{
+                  textAlign: header.align,
+                  width: header.width,
+                  minWidth: header.minWidth
+                }"
               >
                 <slot
                   v-if="slotNames.includes(header.key)"
                   :name="header.key"
+                  :row="item"
                   :item="{ value: item[header.key] }"
                 />
                 <div v-else>
@@ -66,24 +71,25 @@
 <script lang="ts">
 import { uniqBy } from 'lodash'
 import { type PropType, defineComponent } from 'vue'
+import { PageableService } from '@/services/PageableService'
 import CardComponent from '../card-component/CardComponent.vue'
 import type { HeaderDataTableType } from '@/types/DataTableType'
 import type { PageableReceiveType, PageableSend } from '@/types/PaginationType'
 
 export default defineComponent({
   name: 'DataTable',
-  emits: ['change-page'],
+  emits: ['update-params', 'reload-data'],
   components: {
     CardComponent
   },
   props: {
+    params: {
+      type: Object as PropType<PageableSend>,
+      default: () => PageableService.params()
+    },
     pagingData: {
       required: true,
       type: Object as PropType<PageableReceiveType>
-    },
-    limit: {
-      type: Number,
-      default: 15
     },
     headers: {
       type: Array as PropType<HeaderDataTableType[]>,
@@ -98,11 +104,6 @@ export default defineComponent({
       default: false
     }
   },
-  data() {
-    return {
-      page: 1
-    }
-  },
   computed: {
     slotNames() {
       return Object.keys(this.$slots)
@@ -111,32 +112,48 @@ export default defineComponent({
       return this.lastViewed > 0 ? this.lastViewed - this.items.length + 1 : 0
     },
     lastViewed() {
-      return (this.page - 1) * this.limit + this.items.length
+      return (this.page - 1) * this.params._limit + this.items.length
     },
     items() {
       return this.pagingData.items
+    },
+    page() {
+      return this.params._page
+    }
+  },
+  watch: {
+    pagingData() {
+      if (this.page > this.pagingData.totalPages) {
+        this.previous()
+      }
     }
   },
   methods: {
     getNewPage(): PageableSend {
       return {
         _page: this.page,
-        _limit: this.limit
+        _limit: this.params._limit
       }
     },
-    reloadChangePage(): void {
-      this.$emit('change-page', this.getNewPage())
+    updateParams(page: number): void {
+      this.$emit('update-params', {
+        ...this.params,
+        _page: page
+      })
+    },
+    reloadData() {
+      this.$emit('reload-data')
     },
     next(): void {
       if (this.page < this.pagingData.totalPages) {
-        this.page += 1
-        this.reloadChangePage()
+        this.updateParams(this.page + 1)
+        this.reloadData()
       }
     },
     previous(): void {
       if (this.page > 1) {
-        this.page -= 1
-        this.reloadChangePage()
+        this.updateParams(this.page - 1)
+        this.reloadData()
       }
     }
   }

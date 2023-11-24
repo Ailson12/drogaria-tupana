@@ -19,9 +19,7 @@ export class ProductService {
       .catch(errorCallback)
   }
 
-  paginate({ _page = 1, _limit = 15 }: PageableSend = {}) {
-    const params = { _page, _limit }
-
+  paginate(params: PageableSend) {
     return this.http
       .get(this.baseUrl, {
         params
@@ -36,6 +34,13 @@ export class ProductService {
           items: response.data
         } as PageableReceiveType
       })
+      .catch(errorCallback)
+  }
+
+  remove(id: number | string) {
+    return this.http
+      .delete(`${this.baseUrl}/${id}`)
+      .then((response) => response.data)
       .catch(errorCallback)
   }
 }

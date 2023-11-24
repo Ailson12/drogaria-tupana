@@ -1,6 +1,6 @@
 export interface PageableSend extends Record<string, unknown> {
-  _page?: number
-  _limit?: number
+  _page: number
+  _limit: number
 }
 
 export interface PageableReceiveType<E = Record<string, unknown>> {

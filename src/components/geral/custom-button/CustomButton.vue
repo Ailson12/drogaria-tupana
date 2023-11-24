@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'CustomButton',
   props: {
     size: {
-      type: String as PropType<'medium' | 'large'>,
+      type: String as PropType<'medium' | 'large' | 'small'>,
       default: 'medium'
     }
   }
@@ -40,6 +40,11 @@ export default defineComponent({
 .custom-button.medium {
   font-size: 14px;
   padding: 8px 20px;
+}
+
+.custom-button.small {
+  font-size: 14px;
+  padding: 6px 18px;
 }
 
 .custom-button:hover,

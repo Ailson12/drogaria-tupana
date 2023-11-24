@@ -5,8 +5,22 @@
       :headers="headers"
       :loading="loading"
       :pagingData="pagingData"
-      @change-page="fetchProducts"
+      :params="params"
+      @reload-data="fetchProducts"
+      @update-params="params = $event"
     >
+      <template #actions="{ row }">
+        <dropdown-component
+          :items="[
+            {
+              title: 'Excluir',
+              callback: () => {
+                $toast.question('Deseja remover este produto?', () => remove(row.id))
+              }
+            }
+          ]"
+        />
+      </template>
       <template #price="{ item }">
         {{ formatMoney(item.value) }}
       </template>
@@ -21,21 +35,28 @@
 import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/ProductService'
-import type { PageableSend } from '@/types/PaginationType'
 import { PageableService } from '@/services/PageableService'
 import type { HeaderDataTableType } from '@/types/DataTableType'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
+import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
 
 export default defineComponent({
   name: 'ProductIndex',
   components: {
     DataTable,
-    HeaderTitle
+    HeaderTitle,
+    DropdownComponent
   },
   setup() {
     const service = ProductService.init()
     const headers: HeaderDataTableType[] = [
+      {
+        title: 'Ações',
+        key: 'actions',
+        width: '50px',
+        align: 'center'
+      },
       {
         title: 'Nome',
         key: 'name',
@@ -66,14 +87,26 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+      params: PageableService.params(),
       pagingData: PageableService.receive()
     }
   },
   methods: {
-    fetchProducts(params?: PageableSend) {
+    remove(id: number) {
       this.loading = true
       this.service
-        .paginate(params)
+        .remove(id)
+        .then(() => {
+          this.$toast.success('Produto removido com sucesso')
+          this.fetchProducts()
+        })
+        .catch(() => this.$toast.error('Erro ao remover produto.'))
+        .finally(() => (this.loading = false))
+    },
+    fetchProducts() {
+      this.loading = true
+      this.service
+        .paginate(this.params)
         .then((data) => (this.pagingData = data))
         .catch(() => this.$toast.error('Erro ao listar produtos'))
         .finally(() => (this.loading = false))
