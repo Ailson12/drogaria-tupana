@@ -1,9 +1,9 @@
 <template>
   <div class="dropdown-wrapper">
     <custom-button class="dropdown-wrapper-button" @click="toggleVisible" size="small">
-      Ações
+      {{ title }}
     </custom-button>
-    <ul :ref="refList" :class="{ show, 'contains-only-1': items?.length === 1 }">
+    <ul :ref="refList" :class="{ 'contains-only-1': items?.length === 1 }" v-show="show">
       <li
         v-for="(item, index) in items"
         :key="`dropdown_key_${index}`"
@@ -23,13 +23,9 @@
 <script lang="ts">
 import { debounce } from 'lodash'
 import { generateUUID } from '@/helpers/uuid/uuid.helper'
-import { type PropType, defineComponent, type HTMLAttributes } from 'vue'
+import { type DropdownItemType } from './utils/DropdownItemType'
 import CustomButton from '../custom-button/CustomButton.vue'
-
-type DropdownItemType = {
-  title: string
-  callback: () => void
-}
+import { type PropType, defineComponent, type HTMLAttributes } from 'vue'
 
 export default defineComponent({
   name: 'DropdownComponent',
@@ -37,12 +33,17 @@ export default defineComponent({
     CustomButton
   },
   props: {
+    title: {
+      type: String,
+      required: true
+    },
     maxWidth: {
       type: String,
       default: '120px'
     },
     items: {
-      type: Array as PropType<DropdownItemType[]>
+      type: Array as PropType<DropdownItemType[]>,
+      default: () => []
     }
   },
   setup() {
@@ -86,7 +87,6 @@ export default defineComponent({
 }
 
 .dropdown-wrapper > ul {
-  display: none;
   position: absolute;
   z-index: 10;
   margin-top: 6px;
@@ -97,4 +97,4 @@ export default defineComponent({
 }
 </style>
 
-<style src="./dropdown-component.css" scoped />
+<style src="./utils/dropdown-component.css" scoped />

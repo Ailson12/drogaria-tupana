@@ -1,7 +1,3 @@
-.dropdown-wrapper > ul.show {
-  display: block;
-}
-
 .dropdown-wrapper > ul.contains-only-1 li {
   border-radius: 6px;
 }

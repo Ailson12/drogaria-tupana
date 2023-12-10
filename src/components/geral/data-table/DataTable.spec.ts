@@ -199,7 +199,7 @@ describe('DataTable', () => {
       expect(wrapper.vm.firstDisplayed).toBe(0)
     })
 
-    it('should emit the "change-page" event when clicking on a pagination button', async () => {
+    it('should emit the "update-params" and "reload-data" event when clicking on a pagination button', async () => {
       const { wrapper } = mountFactory({
         props: {
           totalPages: 2
@@ -211,14 +211,12 @@ describe('DataTable', () => {
       const previous = footer.find('img[data-control="previous"]')
 
       await next.trigger('click')
-      expect(wrapper.emitted()).toHaveProperty('change-page')
-      expect(wrapper.emitted('change-page')).toHaveLength(1)
-      expect(wrapper.emitted('change-page')?.at(0)).toEqual([{ _page: 2, _limit: 15 }])
+      expect(wrapper.emitted()).toHaveProperty('update-params')
+      expect(wrapper.emitted('update-params')?.at(0)).toEqual([{ _page: 2, _limit: 15 }])
 
       await previous.trigger('click')
-      expect(wrapper.emitted()).toHaveProperty('change-page')
-      expect(wrapper.emitted('change-page')).toHaveLength(2)
-      expect(wrapper.emitted('change-page')?.at(1)).toEqual([{ _page: 1, _limit: 15 }])
+      expect(wrapper.emitted()).toHaveProperty('update-params')
+      expect(wrapper.emitted()).toHaveProperty('reload-data')
     })
   })
 })

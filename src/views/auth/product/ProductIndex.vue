@@ -11,6 +11,7 @@
     >
       <template #actions="{ row }">
         <dropdown-component
+          title="Ações"
           :items="[
             {
               title: 'Excluir',
