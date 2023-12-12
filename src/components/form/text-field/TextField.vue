@@ -1,8 +1,21 @@
 <template>
   <div class="group-form-item">
     <label :for="name">{{ label }}</label>
-    <input v-if="isMoney" :value="value" :id="name" v-money3="moneyConfig" v-on="handlers" />
-    <textarea v-else-if="isTextArea" v-on="handlers" :id="name" rows="5" v-bind="$attrs"></textarea>
+    <input
+      v-if="isMoney"
+      :value="value"
+      :id="name"
+      v-money3="DEFAULT_MONEY_SETTING"
+      v-on="handlers"
+    />
+    <textarea
+      v-else-if="isTextArea"
+      v-on="handlers"
+      :id="name"
+      rows="5"
+      v-bind="$attrs"
+      :value="value"
+    ></textarea>
     <input v-else v-on="handlers" :type="type" :id="name" :value="value" v-bind="$attrs" />
     <span class="message-error" :style="{ opacity: errorMessage?.length ? 1 : 0 }">
       {{ errorMessage }}
@@ -14,6 +27,7 @@
 import { useField } from 'vee-validate'
 import { Money3Directive } from 'v-money3'
 import { defineComponent, ref, toRef } from 'vue'
+import { DEFAULT_MONEY_SETTING } from '@/constants/money.constant'
 
 export default defineComponent({
   name: 'TextField',
@@ -41,7 +55,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { value, errorMessage, setErrors, handleChange, handleBlur } = useField(
+    const { value, errorMessage, setErrors, handleChange, handleBlur } = useField<string>(
       toRef(props, 'name'),
       undefined,
       {
@@ -58,15 +72,7 @@ export default defineComponent({
       input: handleChange
     })
 
-    const moneyConfig = {
-      decimal: ',',
-      thousands: '.',
-      prefix: 'R$ ',
-      precision: 2,
-      masked: false
-    }
-
-    return { value, moneyConfig, handlers, errorMessage }
+    return { value, DEFAULT_MONEY_SETTING, handlers, errorMessage }
   },
   computed: {
     isMoney() {
@@ -79,4 +85,9 @@ export default defineComponent({
 })
 </script>
 
+<style scoped>
+.group-form-item {
+  margin-bottom: v-bind(mb);
+}
+</style>
 <style scoped src="./text-field.css" />

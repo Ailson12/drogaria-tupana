@@ -14,6 +14,10 @@
           title="Ações"
           :items="[
             {
+              title: 'Editar',
+              callback: () => edit(row.id)
+            },
+            {
               title: 'Excluir',
               callback: () => {
                 $toast.question('Deseja remover este produto?', () => remove(row.id))
@@ -93,6 +97,14 @@ export default defineComponent({
     }
   },
   methods: {
+    edit(id: number) {
+      this.$router.push({
+        name: 'product.form',
+        params: {
+          id
+        }
+      })
+    },
     remove(id: number) {
       this.loading = true
       this.service

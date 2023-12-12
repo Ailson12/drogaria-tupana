@@ -3,11 +3,11 @@
     <header-title :show-add="false" title="Formulário de produto" />
     <card-component :loading="loading">
       <form-wrapper
+        :ref="refForm"
+        @submit="onFinish"
         :initial-values="{
           price: '0'
         }"
-        :ref="refForm"
-        @submit="onFinish"
         :validation-schema="validationSchema"
       >
         <div class="row-1">
@@ -16,20 +16,23 @@
         </div>
         <text-field label="Descrição" name="description" type="textarea" />
 
-        <custom-button class="ml-auto d-flex">Salvar</custom-button>
+        <custom-button :disabled="loading" class="ml-auto d-flex">Salvar</custom-button>
       </form-wrapper>
     </card-component>
   </div>
 </template>
 
 <script lang="ts">
+import { unformat } from 'v-money3'
 import { defineComponent } from 'vue'
 import { validationSchema } from './validation'
 import { Form as FormWrapper } from 'vee-validate'
 import { generateUUID } from '@/helpers/uuid/uuid.helper'
 import { ProductService } from '@/services/ProductService'
+import { formatMoney } from '@/helpers/money/money.helper'
+import { type ProductType } from '@/types/product/ProductType'
+import type { FormWrapperType } from '@/types/FormWrapperType'
 import TextField from '@/components/form/text-field/TextField.vue'
-import { clearMoneyFormatting } from '@/helpers/money/money.helper'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 import CardComponent from '@/components/geral/card-component/CardComponent.vue'
@@ -44,7 +47,10 @@ export default defineComponent({
     CardComponent
   },
   setup() {
+    const service = ProductService.init()
+
     return {
+      service,
       validationSchema,
       refForm: generateUUID()
     }
@@ -52,14 +58,55 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      service: ProductService.init()
+      product: null as null | ProductType
+    }
+  },
+  computed: {
+    form() {
+      return this.$refs[this.refForm] as FormWrapperType
+    },
+    id() {
+      return this.$route.params.id as string | undefined
+    }
+  },
+  mounted() {
+    if (this.id) {
+      this.fetchProductById(this.id)
+    }
+  },
+  watch: {
+    product() {
+      if (this.product) {
+        this.form.setValues({
+          name: this.product.name,
+          price: formatMoney(this.product.price),
+          description: this.product.description
+        })
+      }
     }
   },
   methods: {
-    onFinish(values: Record<string, unknown>) {
+    fetchProductById(id: string) {
       this.loading = true
       this.service
-        .create({ ...values, price: clearMoneyFormatting(values.price as string) })
+        .findById(id)
+        .then((data) => (this.product = data))
+        .catch(() => this.$toast.info('Produto não encontrado'))
+        .finally(() => (this.loading = false))
+    },
+    getRequestBody() {
+      const values = this.form.getValues()
+
+      return {
+        ...values,
+        price: unformat(values.price as string),
+        created_at: this.product?.created_at ?? new Date()
+      }
+    },
+    onFinish() {
+      this.loading = true
+      this.service
+        .updateOrCreate(this.getRequestBody(), this.id)
         .then(() => {
           this.$toast.success('Produto salvo com sucesso')
           this.$router.push({
