@@ -2,6 +2,14 @@
   display: flex;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
 .ml-auto {
   margin-left: auto;
 }

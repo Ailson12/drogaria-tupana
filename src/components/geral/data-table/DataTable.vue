@@ -19,6 +19,11 @@
             </tr>
           </thead>
           <tbody>
+            <tr v-show="!items.length">
+              <td :colspan="headers.length">
+                <empty-data />
+              </td>
+            </tr>
             <tr v-for="(item, index) in items" :key="index">
               <td
                 v-for="(header, indexHeader) in headers"
@@ -74,12 +79,14 @@ import { type PropType, defineComponent } from 'vue'
 import { PageableService } from '@/services/PageableService'
 import CardComponent from '../card-component/CardComponent.vue'
 import type { HeaderDataTableType } from '@/types/DataTableType'
+import EmptyData from '@/components/geral/empty-data/EmptyData.vue'
 import type { PageableReceiveType, PageableSend } from '@/types/PaginationType'
 
 export default defineComponent({
   name: 'DataTable',
   emits: ['update-params', 'reload-data'],
   components: {
+    EmptyData,
     CardComponent
   },
   props: {
