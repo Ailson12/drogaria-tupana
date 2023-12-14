@@ -30,7 +30,7 @@
         {{ formatMoney(item.value) }}
       </template>
       <template #created_at="{ item }">
-        {{ new Date(item.value).toLocaleString() }}
+        {{ creationDateFormatter(item.value) }}
       </template>
     </data-table>
   </div>
@@ -41,8 +41,9 @@ import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/ProductService'
 import { PageableService } from '@/services/PageableService'
-import type { HeaderDataTableType } from '@/types/geral/DataTableType'
+import { creationDateFormatter } from '@/helpers/date/date.helper'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
+import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
 
@@ -84,7 +85,7 @@ export default defineComponent({
       }
     ]
 
-    return { headers, service, formatMoney }
+    return { headers, service }
   },
   mounted() {
     this.fetchProducts()
@@ -97,6 +98,8 @@ export default defineComponent({
     }
   },
   methods: {
+    formatMoney,
+    creationDateFormatter,
     edit(id: number) {
       this.$router.push({
         name: 'product.form',
@@ -127,4 +130,3 @@ export default defineComponent({
   }
 })
 </script>
-@/types/geral/DataTableType

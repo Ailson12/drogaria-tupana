@@ -20,14 +20,14 @@
             {
               title: 'Excluir',
               callback: () => {
-                $toast.question('Deseja remover este produto?', () => console.log(row.id))
+                $toast.question('Deseja remover esta categoria?', () => console.log(row.id))
               }
             }
           ]"
         />
       </template>
       <template #created_at="{ item }">
-        {{ new Date(item.value).toLocaleString() }}
+        {{ creationDateFormatter(item.value) }}
       </template>
     </data-table>
   </div>
@@ -38,6 +38,7 @@ import { defineComponent } from 'vue'
 import { PageableService } from '@/services/PageableService'
 import { CategoryService } from '@/services/category.service'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
+import { creationDateFormatter } from '@/helpers/date/date.helper'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
@@ -87,6 +88,7 @@ export default defineComponent({
     this.fetchCategories()
   },
   methods: {
+    creationDateFormatter,
     fetchCategories() {
       this.loading = true
       this.service
