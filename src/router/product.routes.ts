@@ -1,16 +1,9 @@
-import type { RouteRecordRaw } from 'vue-router'
+import { generateCrudBasicRoutes } from '@/helpers/route/route.helper'
 
-const baseUrl = 'product'
-
-export const productRoutes: RouteRecordRaw[] = [
-  {
-    path: `/${baseUrl}`,
-    name: `${baseUrl}.index`,
-    component: () => import('@/views/auth/product/ProductIndex.vue')
-  },
-  {
-    path: `/${baseUrl}/form/:id?`,
-    name: `${baseUrl}.form`,
-    component: () => import('@/views/auth/product/ProductForm.vue')
+export const productRoutes = generateCrudBasicRoutes({
+  baseUrl: 'product',
+  components: {
+    form: import('@/views/auth/product/ProductForm.vue'),
+    index: import('@/views/auth/product/ProductIndex.vue')
   }
-]
+})
