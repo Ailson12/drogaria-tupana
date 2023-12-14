@@ -1,8 +1,8 @@
 import { api } from '@/config/api'
 import type { AxiosInstance } from 'axios'
-import type { PageableSend } from '@/types/PaginationType'
+import type { PageableSend } from '@/types/geral/PaginationType'
 import { errorCallback } from '@/helpers/service/service.helper'
-import type { PageableReceiveType } from '../types/PaginationType'
+import type { PageableReceiveType } from '../types/geral/PaginationType'
 
 type DataFormType = Record<string | number, unknown>
 

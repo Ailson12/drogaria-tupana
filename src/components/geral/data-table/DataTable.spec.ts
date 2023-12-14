@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import DataTable from './DataTable.vue'
 import { describe, expect, it, vi, type Mock } from 'vitest'
-import type { HeaderDataTableType } from '@/types/DataTableType'
-import type { PageableReceiveType } from '@/types/PaginationType'
+import type { HeaderDataTableType } from '@/types/geral/DataTableType'
+import type { PageableReceiveType } from '@/types/geral/PaginationType'
 import type { GlobalMountOptions } from 'node_modules/@vue/test-utils/dist/types'
 
 type MountProps = {

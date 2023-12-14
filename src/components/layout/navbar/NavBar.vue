@@ -21,7 +21,7 @@
 <script lang="ts">
 import { mapActions } from 'pinia'
 import { defineComponent } from 'vue'
-import { TypeToastEnum } from '@/types/ToastType'
+import { TypeToastEnum } from '@/types/geral/ToastType'
 import { useAuthStore } from '@/stores/auth.store'
 import { useSideBarStore } from '@/stores/sidebar.store'
 
@@ -54,3 +54,4 @@ export default defineComponent({
   cursor: pointer;
 }
 </style>
+@/types/geral/ToastType

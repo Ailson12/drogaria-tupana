@@ -41,7 +41,7 @@ import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/ProductService'
 import { PageableService } from '@/services/PageableService'
-import type { HeaderDataTableType } from '@/types/DataTableType'
+import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
@@ -127,3 +127,4 @@ export default defineComponent({
   }
 })
 </script>
+@/types/geral/DataTableType

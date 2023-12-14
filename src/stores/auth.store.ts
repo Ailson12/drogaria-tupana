@@ -1,7 +1,7 @@
 import router from '@/router'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import type { DataLoginType } from '@/types/AuthType'
+import type { DataLoginType } from '@/types/geral/AuthType'
 
 export const useAuthStore = defineStore('auth', {
   state() {

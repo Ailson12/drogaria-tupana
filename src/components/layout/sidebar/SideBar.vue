@@ -26,30 +26,14 @@
 import { defineComponent } from 'vue'
 import { mapActions, mapState } from 'pinia'
 import { useSideBarStore } from '@/stores/sidebar.store'
-import productIcon from '@/assets/icons/icon-product.svg'
-import categoryIcon from '@/assets/icons/icon-category.svg'
 import { SIDEBAR_LINKS } from '@/constants/sidebar.constant'
-import type { SideBarLinkType } from '@/types/SideBarLinkType'
+import type { SideBarLinkType } from '@/types/geral/SideBarLinkType'
 
 export default defineComponent({
   name: 'SideBar',
   setup() {
     return {
       links: SIDEBAR_LINKS
-    }
-  },
-  data() {
-    return {
-      menu: [
-        {
-          title: 'Categoria',
-          icon: categoryIcon
-        },
-        {
-          title: 'Produto',
-          icon: productIcon
-        }
-      ]
     }
   },
   computed: {
@@ -68,3 +52,4 @@ export default defineComponent({
 </script>
 
 <style scoped src="./sidebar.css" />
+@/types/geral/SideBarLinkType

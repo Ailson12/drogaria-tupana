@@ -1,5 +1,5 @@
 import izitoast, { type IziToast } from 'izitoast'
-import { type ParamsToastType, type ToastType, TypeToastEnum } from '@/types/ToastType'
+import { type ParamsToastType, type ToastType, TypeToastEnum } from '@/types/geral/ToastType'
 
 export const toast: ToastType = {
   getIcon(color: string) {

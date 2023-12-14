@@ -1,5 +1,5 @@
 import { toast } from '@/plugins/toast/toast'
-import { TypeToastEnum } from '@/types/ToastType'
+import { TypeToastEnum } from '@/types/geral/ToastType'
 import { useAuthStore } from '@/stores/auth.store'
 import axios, {
   AxiosError,

@@ -31,7 +31,7 @@ import { generateUUID } from '@/helpers/uuid/uuid.helper'
 import { ProductService } from '@/services/ProductService'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { type ProductType } from '@/types/product/ProductType'
-import type { FormWrapperType } from '@/types/FormWrapperType'
+import type { FormWrapperType } from '@/types/geral/FormWrapperType'
 import TextField from '@/components/form/text-field/TextField.vue'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
@@ -134,3 +134,4 @@ export default defineComponent({
   }
 }
 </style>
+@/types/geral/FormWrapperType

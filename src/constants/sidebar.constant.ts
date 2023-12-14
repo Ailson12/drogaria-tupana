@@ -1,6 +1,6 @@
 import productIcon from '@/assets/icons/icon-product.svg'
 import categoryIcon from '@/assets/icons/icon-category.svg'
-import type { SideBarLinkType } from '@/types/SideBarLinkType'
+import type { SideBarLinkType } from '@/types/geral/SideBarLinkType'
 
 export const SIDEBAR_LINKS = [
   {

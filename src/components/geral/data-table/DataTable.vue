@@ -78,9 +78,9 @@ import { uniqBy } from 'lodash'
 import { type PropType, defineComponent } from 'vue'
 import { PageableService } from '@/services/PageableService'
 import CardComponent from '../card-component/CardComponent.vue'
-import type { HeaderDataTableType } from '@/types/DataTableType'
+import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import EmptyData from '@/components/geral/empty-data/EmptyData.vue'
-import type { PageableReceiveType, PageableSend } from '@/types/PaginationType'
+import type { PageableReceiveType, PageableSend } from '@/types/geral/PaginationType'
 
 export default defineComponent({
   name: 'DataTable',
@@ -119,13 +119,13 @@ export default defineComponent({
       return this.lastViewed > 0 ? this.lastViewed - this.items.length + 1 : 0
     },
     lastViewed() {
-      return (this.page - 1) * this.params._limit + this.items.length
+      return (this.page - 1) * (this.params?._limit ?? 0) + this.items.length
     },
     items() {
       return this.pagingData.items
     },
     page() {
-      return this.params._page
+      return this.params?._page ?? 0
     }
   },
   watch: {
@@ -139,7 +139,7 @@ export default defineComponent({
     getNewPage(): PageableSend {
       return {
         _page: this.page,
-        _limit: this.params._limit
+        _limit: this.params?._limit ?? 0
       }
     },
     updateParams(page: number): void {
