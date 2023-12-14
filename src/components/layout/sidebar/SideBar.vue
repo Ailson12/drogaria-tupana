@@ -11,16 +11,11 @@
     </div>
     <div class="sidebar-content">
       <ul>
-        <li
-          v-for="item in menu"
-          :key="item.title"
-          :class="{ active: currentMenuTitle === item.title }"
-          @click="currentMenuTitle = item.title"
-        >
+        <li v-for="(link, index) in links" :key="index" @click="selectLink(link)">
           <div>
-            <img width="20" height="20" :src="item.icon" :alt="item.title" />
+            <img width="20" height="20" :src="link.icon.src" :alt="link.title" />
           </div>
-          {{ item.title }}
+          {{ link.title }}
         </li>
       </ul>
     </div>
@@ -33,12 +28,18 @@ import { mapActions, mapState } from 'pinia'
 import { useSideBarStore } from '@/stores/sidebar.store'
 import productIcon from '@/assets/icons/icon-product.svg'
 import categoryIcon from '@/assets/icons/icon-category.svg'
+import { SIDEBAR_LINKS } from '@/constants/sidebar.constant'
+import type { SideBarLinkType } from '@/types/SideBarLinkType'
 
 export default defineComponent({
   name: 'SideBar',
+  setup() {
+    return {
+      links: SIDEBAR_LINKS
+    }
+  },
   data() {
     return {
-      currentMenuTitle: '',
       menu: [
         {
           title: 'Categoria',
@@ -55,7 +56,13 @@ export default defineComponent({
     ...mapState(useSideBarStore, ['visible'])
   },
   methods: {
-    ...mapActions(useSideBarStore, ['toggleVisible'])
+    ...mapActions(useSideBarStore, ['toggleVisible']),
+    selectLink(link: SideBarLinkType) {
+      this.$router.push({
+        name: link.route.name
+      })
+      this.toggleVisible()
+    }
   }
 })
 </script>
