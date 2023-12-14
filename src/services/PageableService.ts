@@ -1,4 +1,4 @@
-import type { PageableReceiveType, PageableSend } from '@/types/PaginationType'
+import type { PageableReceiveType, PageableSend } from '@/types/geral/PaginationType'
 
 export class PageableService {
   static receive() {

@@ -1,5 +1,5 @@
 import { api } from '@/config/api'
-import type { DataLoginType } from '@/types/AuthType'
+import type { DataLoginType } from '@/types/geral/AuthType'
 import { errorCallback } from '@/helpers/service/service.helper'
 
 type ParamsLogin = {
