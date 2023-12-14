@@ -2,6 +2,7 @@
   <div class="app-wrapper">
     <progress-bar :show="showProgressBar" />
     <nav-bar />
+    <side-bar />
     <div class="content-page">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -14,13 +15,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NavBar from '@/components/layout/NavBar.vue'
+import NavBar from '@/components/layout/navbar/NavBar.vue'
+import SideBar from '@/components/layout/sidebar/SideBar.vue'
 import ProgressBar from '@/components/geral/progress-bar/ProgressBar.vue'
 
 export default defineComponent({
   name: 'AuthApplication',
   components: {
     NavBar,
+    SideBar,
     ProgressBar
   },
   data() {

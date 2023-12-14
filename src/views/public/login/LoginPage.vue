@@ -71,7 +71,7 @@ export default defineComponent({
             name: 'product.index'
           })
         })
-        .catch(() => this.$toast.error('Erro ao realizar login'))
+        .catch(() => this.$toast.error('Credenciais não encontrada.'))
     }
   }
 })

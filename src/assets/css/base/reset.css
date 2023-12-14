@@ -6,6 +6,11 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+}
+
 p,
 ul,
 body {
