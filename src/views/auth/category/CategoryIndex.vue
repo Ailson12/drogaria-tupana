@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-title title="Categoria" :route-add="{ name: 'category.form' }" />
+    <header-title title="Categoria" :route-add="{ name: routeNameForm }" />
     <data-table
       :headers="headers"
       :params="dataTableManager.params.value"
