@@ -1,13 +1,13 @@
 <template>
   <div>
-    <header-title title="Produtos" :route-add="{ name: 'product.form' }" />
+    <header-title title="Produtos" :route-add="{ name: routeNameForm }" />
     <data-table
       :headers="headers"
-      :loading="loading"
-      :pagingData="pagingData"
-      :params="params"
-      @reload-data="fetchProducts"
-      @update-params="params = $event"
+      :params="dataTableManager.params.value"
+      @reload-data="dataTableManager.fetchData"
+      :loading="dataTableManager.loading.value"
+      :pagingData="dataTableManager.pagingData.value"
+      @update-params="(value) => dataTableManager.setParams(value)"
     >
       <template #actions="{ row }">
         <dropdown-component
@@ -15,12 +15,14 @@
           :items="[
             {
               title: 'Editar',
-              callback: () => edit(row.id)
+              callback: () => dataTableManager.actions.edit(row.id)
             },
             {
               title: 'Excluir',
               callback: () => {
-                $toast.question('Deseja remover este produto?', () => remove(row.id))
+                $toast.question('Deseja remover este produto?', () =>
+                  dataTableManager.actions.remove(row.id)
+                )
               }
             }
           ]"
@@ -40,12 +42,12 @@
 import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/product.service'
-import { PageableService } from '@/services/pageable.service'
 import { creationDateFormatter } from '@/helpers/date/date.helper'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
+import { useDataTableManager } from '@/composables/data-table-manager.composable'
 
 export default defineComponent({
   name: 'ProductIndex',
@@ -55,7 +57,12 @@ export default defineComponent({
     DropdownComponent
   },
   setup() {
-    const service = ProductService.init()
+    const routeNameForm = 'product.form'
+    const dataTableManager = useDataTableManager({
+      routeNameForm,
+      service: ProductService.init()
+    })
+
     const headers: HeaderDataTableType[] = [
       {
         title: 'Ações',
@@ -85,49 +92,14 @@ export default defineComponent({
       }
     ]
 
-    return { headers, service }
+    return { headers, routeNameForm, dataTableManager }
   },
   mounted() {
-    this.fetchProducts()
-  },
-  data() {
-    return {
-      loading: false,
-      params: PageableService.params(),
-      pagingData: PageableService.receive()
-    }
+    this.dataTableManager.fetchData()
   },
   methods: {
     formatMoney,
-    creationDateFormatter,
-    edit(id: number) {
-      this.$router.push({
-        name: 'product.form',
-        params: {
-          id
-        }
-      })
-    },
-    remove(id: number) {
-      this.loading = true
-      this.service
-        .remove(id)
-        .then(() => {
-          this.$toast.success('Produto removido com sucesso')
-          this.fetchProducts()
-        })
-        .catch(() => this.$toast.error('Erro ao remover produto.'))
-        .finally(() => (this.loading = false))
-    },
-    fetchProducts() {
-      this.loading = true
-      this.service
-        .paginate(this.params)
-        .then((data) => (this.pagingData = data))
-        .catch(() => this.$toast.error('Erro ao listar produtos'))
-        .finally(() => (this.loading = false))
-    }
+    creationDateFormatter
   }
 })
 </script>
-@/services/pageable.service @/services/product.service

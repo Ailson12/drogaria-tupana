@@ -13,12 +13,12 @@ export const generateCrudBasicRoutes = (params: Params) => {
     {
       path: `/${params.baseUrl}`,
       name: `${params.baseUrl}.index`,
-      component: params.components.index
+      component: () => params.components.index
     },
     {
       path: `/${params.baseUrl}/form/:id?`,
       name: `${params.baseUrl}.form`,
-      component: params.components.form
+      component: () => params.components.form
     }
   ] satisfies RouteRecordRaw[]
 }

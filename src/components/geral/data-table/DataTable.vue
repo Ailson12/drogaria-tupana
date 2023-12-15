@@ -168,4 +168,3 @@ export default defineComponent({
 </script>
 
 <style src="./data-table.css" scoped />
-@/services/pageable.service

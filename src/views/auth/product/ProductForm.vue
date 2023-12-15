@@ -134,4 +134,3 @@ export default defineComponent({
   }
 }
 </style>
-@/types/geral/FormWrapperType @/services/product.service

@@ -78,4 +78,3 @@ export default defineComponent({
 </script>
 
 <style src="./utils/login-page.css" scoped />
-@/services/login.service

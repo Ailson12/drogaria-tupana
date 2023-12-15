@@ -3,11 +3,11 @@
     <header-title title="Categoria" :route-add="{ name: 'category.form' }" />
     <data-table
       :headers="headers"
-      :loading="loading"
-      :pagingData="pagingData"
-      :params="params"
-      @reload-data="fetchCategories"
-      @update-params="params = $event"
+      :params="dataTableManager.params.value"
+      @reload-data="dataTableManager.fetchData"
+      :loading="dataTableManager.loading.value"
+      :pagingData="dataTableManager.pagingData.value"
+      @update-params="(value) => dataTableManager.setParams(value)"
     >
       <template #actions="{ row }">
         <dropdown-component
@@ -15,12 +15,14 @@
           :items="[
             {
               title: 'Editar',
-              callback: () => console.log(row.id)
+              callback: () => dataTableManager.actions.edit(row.id)
             },
             {
               title: 'Excluir',
               callback: () => {
-                $toast.question('Deseja remover esta categoria?', () => console.log(row.id))
+                $toast.question('Deseja remover esta categoria?', () =>
+                  dataTableManager.actions.remove(row.id)
+                )
               }
             }
           ]"
@@ -35,13 +37,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { PageableService } from '@/services/pageable.service'
 import { CategoryService } from '@/services/category.service'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import { creationDateFormatter } from '@/helpers/date/date.helper'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
+import { useDataTableManager } from '@/composables/data-table-manager.composable'
 
 export default defineComponent({
   name: 'CategoryIndex',
@@ -51,7 +53,12 @@ export default defineComponent({
     DropdownComponent
   },
   setup() {
-    const service = CategoryService.init()
+    const routeNameForm = 'category.form'
+    const dataTableManager = useDataTableManager({
+      routeNameForm,
+      service: CategoryService.init()
+    })
+
     const headers: HeaderDataTableType[] = [
       {
         title: 'Ações',
@@ -73,31 +80,16 @@ export default defineComponent({
     ]
 
     return {
-      service,
-      headers
-    }
-  },
-  data() {
-    return {
-      loading: false,
-      params: PageableService.params(),
-      pagingData: PageableService.receive()
+      headers,
+      routeNameForm,
+      dataTableManager
     }
   },
   mounted() {
-    this.fetchCategories()
+    this.dataTableManager.fetchData()
   },
   methods: {
-    creationDateFormatter,
-    fetchCategories() {
-      this.loading = true
-      this.service
-        .paginate(this.params)
-        .then((data) => (this.pagingData = data))
-        .catch(() => this.$toast.error('Erro ao listar categorias'))
-        .finally(() => (this.loading = false))
-    }
+    creationDateFormatter
   }
 })
 </script>
-@/services/pageable.service
