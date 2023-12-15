@@ -39,7 +39,7 @@ import { mapActions } from 'pinia'
 import { defineComponent } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { validationSchema } from './utils/validation'
-import { LoginService } from '@/services/LoginService'
+import { LoginService } from '@/services/login.service'
 import TextField from '@/components/form/text-field/TextField.vue'
 import { Form as FormWrapper, type GenericObject } from 'vee-validate'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
@@ -78,3 +78,4 @@ export default defineComponent({
 </script>
 
 <style src="./utils/login-page.css" scoped />
+@/services/login.service

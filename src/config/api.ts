@@ -1,13 +1,12 @@
+import { toast } from '@/plugins/toast/toast'
+import { TypeToastEnum } from '@/types/geral/ToastType'
+import { useAuthStore } from '@/stores/auth.store'
 import axios, {
   AxiosError,
   HttpStatusCode,
   type AxiosResponse,
   type InternalAxiosRequestConfig
 } from 'axios'
-import { toast } from '@/plugins/toast/toast'
-import { useAuthStore } from '@/stores/auth.store'
-import { sleep } from '@/helpers/sleep/sleep.helper'
-import { TypeToastEnum } from '@/types/geral/ToastType'
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL
@@ -24,20 +23,21 @@ const requestCallback = {
 
 const responseCallback = {
   success: (response: AxiosResponse) => response,
-  error: async ({ response }: AxiosError) => {
+  error: ({ response }: AxiosError) => {
     if (response?.status === HttpStatusCode.Unauthorized) {
-      const messages = document.querySelectorAll('.iziToast-wrapper > div')
-      messages.forEach((item) => item.remove())
-      toast.show({
-        message: 'Login expirado',
-        timeout: 4000,
-        type: TypeToastEnum.INFO
-      })
+      const { logout } = useAuthStore()
+      setTimeout(() => {
+        const messages = document.querySelectorAll('.iziToast-wrapper > div')
+        messages.forEach((item) => item.remove())
 
-      await sleep(400)
+        toast.show({
+          message: 'Login expirado',
+          timeout: 3000,
+          type: TypeToastEnum.INFO
+        })
+      }, 100)
 
-      const authStore = useAuthStore()
-      authStore.logout()
+      setTimeout(logout, 3000)
     }
 
     return Promise.reject(response)

@@ -76,7 +76,7 @@
 <script lang="ts">
 import { uniqBy } from 'lodash'
 import { type PropType, defineComponent } from 'vue'
-import { PageableService } from '@/services/PageableService'
+import { PageableService } from '@/services/pageable.service'
 import CardComponent from '../card-component/CardComponent.vue'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import EmptyData from '@/components/geral/empty-data/EmptyData.vue'
@@ -168,3 +168,4 @@ export default defineComponent({
 </script>
 
 <style src="./data-table.css" scoped />
+@/services/pageable.service

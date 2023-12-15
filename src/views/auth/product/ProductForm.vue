@@ -28,7 +28,7 @@ import { defineComponent } from 'vue'
 import { validationSchema } from './validation'
 import { Form as FormWrapper } from 'vee-validate'
 import { generateUUID } from '@/helpers/uuid/uuid.helper'
-import { ProductService } from '@/services/ProductService'
+import { ProductService } from '@/services/product.service'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { type ProductType } from '@/types/product/ProductType'
 import type { FormWrapperType } from '@/types/geral/FormWrapperType'
@@ -134,4 +134,4 @@ export default defineComponent({
   }
 }
 </style>
-@/types/geral/FormWrapperType
+@/types/geral/FormWrapperType @/services/product.service

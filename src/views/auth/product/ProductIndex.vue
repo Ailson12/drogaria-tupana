@@ -39,8 +39,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
-import { ProductService } from '@/services/ProductService'
-import { PageableService } from '@/services/PageableService'
+import { ProductService } from '@/services/product.service'
+import { PageableService } from '@/services/pageable.service'
 import { creationDateFormatter } from '@/helpers/date/date.helper'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
@@ -130,3 +130,4 @@ export default defineComponent({
   }
 })
 </script>
+@/services/pageable.service @/services/product.service

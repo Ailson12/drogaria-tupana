@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { PageableService } from '@/services/PageableService'
+import { PageableService } from '@/services/pageable.service'
 import { CategoryService } from '@/services/category.service'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import { creationDateFormatter } from '@/helpers/date/date.helper'
@@ -100,3 +100,4 @@ export default defineComponent({
   }
 })
 </script>
+@/services/pageable.service
