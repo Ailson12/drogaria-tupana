@@ -1,10 +1,10 @@
 <template>
   <div>
     <header-title :show-add="false" title="Formulário de produto" />
-    <card-component :loading="loading">
+    <card-component :loading="basicFormManager.loading.value">
       <form-wrapper
-        :ref="refForm"
-        @submit="onFinish"
+        :ref="basicFormManager.form"
+        @submit="basicFormManager.onFinish"
         :initial-values="{
           price: '0'
         }"
@@ -16,7 +16,9 @@
         </div>
         <text-field label="Descrição" name="description" type="textarea" />
 
-        <custom-button :disabled="loading" class="ml-auto d-flex">Salvar</custom-button>
+        <custom-button :disabled="basicFormManager.loading.value" class="ml-auto d-flex">
+          Salvar
+        </custom-button>
       </form-wrapper>
     </card-component>
   </div>
@@ -27,15 +29,14 @@ import { unformat } from 'v-money3'
 import { defineComponent } from 'vue'
 import { validationSchema } from './validation'
 import { Form as FormWrapper } from 'vee-validate'
-import { generateUUID } from '@/helpers/uuid/uuid.helper'
 import { ProductService } from '@/services/product.service'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { type ProductType } from '@/types/product/ProductType'
-import type { FormWrapperType } from '@/types/geral/FormWrapperType'
 import TextField from '@/components/form/text-field/TextField.vue'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 import CardComponent from '@/components/geral/card-component/CardComponent.vue'
+import { useBasicFormManager } from '@/composables/basic-form-manager.composable'
 
 export default defineComponent({
   name: 'ProductForm',
@@ -49,72 +50,31 @@ export default defineComponent({
   setup() {
     const service = ProductService.init()
 
-    return {
+    const basicFormManager = useBasicFormManager<ProductType>({
       service,
-      validationSchema,
-      refForm: generateUUID()
-    }
-  },
-  data() {
-    return {
-      loading: false,
-      product: null as null | ProductType
-    }
-  },
-  computed: {
-    form() {
-      return this.$refs[this.refForm] as FormWrapperType
-    },
-    id() {
-      return this.$route.params.id as string | undefined
-    }
-  },
-  mounted() {
-    if (this.id) {
-      this.fetchProductById(this.id)
-    }
-  },
-  watch: {
-    product() {
-      if (this.product) {
-        this.form.setValues({
-          name: this.product.name,
-          price: formatMoney(this.product.price),
-          description: this.product.description
-        })
+      successfulSaveRoute: 'product.index',
+      messages: {
+        errorFindById: 'Produto não encontrado'
+      },
+      getRequestBody(data, entity) {
+        return {
+          ...data,
+          price: unformat(data.price as string),
+          created_at: entity?.created_at ?? new Date()
+        }
+      },
+      fillEdition(entity) {
+        return {
+          name: entity.name,
+          price: formatMoney(entity.price),
+          description: entity.description
+        }
       }
-    }
-  },
-  methods: {
-    fetchProductById(id: string) {
-      this.loading = true
-      this.service
-        .findById(id)
-        .then((data) => (this.product = data))
-        .catch(() => this.$toast.info('Produto não encontrado'))
-        .finally(() => (this.loading = false))
-    },
-    getRequestBody() {
-      const values = this.form.getValues()
+    })
 
-      return {
-        ...values,
-        price: unformat(values.price as string),
-        created_at: this.product?.created_at ?? new Date()
-      }
-    },
-    onFinish() {
-      this.loading = true
-      this.service
-        .updateOrCreate(this.getRequestBody(), this.id)
-        .then(() => {
-          this.$toast.success('Produto salvo com sucesso')
-          this.$router.push({
-            name: 'product.index'
-          })
-        })
-        .catch(() => this.$toast.error('Erro ao salvar produto'))
-        .finally(() => (this.loading = false))
+    return {
+      basicFormManager,
+      validationSchema
     }
   }
 })
