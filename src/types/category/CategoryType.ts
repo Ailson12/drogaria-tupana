@@ -1,6 +1,6 @@
-export interface CategoryType {
-  id?: number
+import type { ModelType } from '../geral/ModelType'
+
+export interface CategoryType extends ModelType {
   name: string
-  created_at: string
   description: string
 }

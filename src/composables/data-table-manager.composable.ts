@@ -1,19 +1,24 @@
-import { ref } from 'vue'
 import router from '@/router'
+import { ref, type Ref } from 'vue'
 import { toast } from '@/plugins/toast/toast'
-import type { BaseService } from '@/services/base.service'
+import type { ModelType } from '@/types/geral/ModelType'
 import { PageableService } from '@/services/pageable.service'
-import type { PageableSend } from '@/types/geral/PaginationType'
+import type { CrudServiceType } from '@/types/geral/CrudServiceType'
+import type { PageableReceiveType, PageableSend } from '@/types/geral/PaginationType'
 
-type Params = {
-  service: BaseService
+type Params<E extends ModelType> = {
+  service: CrudServiceType<E>
   routeNameForm: string
 }
 
-export const useDataTableManager = (params: Params) => {
+export const useDataTableManager = <E extends ModelType>(params: Params<E>) => {
   const loading = ref<boolean>(false)
   const pagingParams = ref(PageableService.params())
-  const pagingData = ref(PageableService.receive())
+  const pagingData: Ref<PageableReceiveType<E>> = ref({
+    items: [],
+    totalPages: 0,
+    totalItems: 0
+  })
 
   const fetchData = () => {
     loading.value = true

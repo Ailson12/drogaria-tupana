@@ -42,6 +42,7 @@
 import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/product.service'
+import type { ProductType } from '@/types/product/ProductType'
 import { creationDateFormatter } from '@/helpers/date/date.helper'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
@@ -58,7 +59,7 @@ export default defineComponent({
   },
   setup() {
     const routeNameForm = 'product.form'
-    const dataTableManager = useDataTableManager({
+    const dataTableManager = useDataTableManager<ProductType>({
       routeNameForm,
       service: ProductService.init()
     })

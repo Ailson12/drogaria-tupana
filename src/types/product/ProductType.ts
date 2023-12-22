@@ -1,7 +1,7 @@
-export interface ProductType {
-  id?: number
+import type { ModelType } from '../geral/ModelType'
+
+export interface ProductType extends ModelType {
   name: string
   price: number
-  created_at: string
   description: string
 }

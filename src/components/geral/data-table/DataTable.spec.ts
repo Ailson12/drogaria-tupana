@@ -4,10 +4,11 @@ import { describe, expect, it, vi, type Mock } from 'vitest'
 import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import type { PageableReceiveType } from '@/types/geral/PaginationType'
 import type { GlobalMountOptions } from 'node_modules/@vue/test-utils/dist/types'
+import type { ModelType } from '@/types/geral/ModelType'
 
 type MountProps = {
   totalPages?: number
-  items?: Record<string, unknown>[]
+  items?: ModelType[]
   headers?: HeaderDataTableType[]
 }
 
@@ -36,14 +37,17 @@ const mountFactory = ({ props, slots }: MountParams = {}) => {
 
   const items = [
     {
+      created_at: new Date().toJSON(),
       name: 'Mateus',
       age: 20
     },
     {
+      created_at: new Date().toJSON(),
       name: 'Pedro',
       age: 24
     },
     {
+      created_at: new Date().toJSON(),
       name: 'Lucas',
       age: 33
     }

@@ -44,6 +44,7 @@ import type { HeaderDataTableType } from '@/types/geral/DataTableType'
 import HeaderTitle from '@/components/geral/header-title/HeaderTitle.vue'
 import DropdownComponent from '@/components/geral/dropdown/DropdownComponent.vue'
 import { useDataTableManager } from '@/composables/data-table-manager.composable'
+import type { CategoryType } from '@/types/category/CategoryType'
 
 export default defineComponent({
   name: 'CategoryIndex',
@@ -54,7 +55,7 @@ export default defineComponent({
   },
   setup() {
     const routeNameForm = 'category.form'
-    const dataTableManager = useDataTableManager({
+    const dataTableManager = useDataTableManager<CategoryType>({
       routeNameForm,
       service: CategoryService.init()
     })

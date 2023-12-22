@@ -3,8 +3,9 @@ import type { AxiosInstance } from 'axios'
 import { errorCallback } from '@/helpers/service/service.helper'
 import type { CrudServiceType, DataFormType } from '@/types/geral/CrudServiceType'
 import type { PageableReceiveType, PageableSend } from '@/types/geral/PaginationType'
+import type { ModelType } from '@/types/geral/ModelType'
 
-export class BaseService implements CrudServiceType {
+export class BaseService<E extends ModelType> implements CrudServiceType<E> {
   private baseUrl: string
   private http: AxiosInstance = api
 
@@ -25,7 +26,7 @@ export class BaseService implements CrudServiceType {
           totalPages,
           totalItems,
           items: response.data
-        } as PageableReceiveType
+        } as PageableReceiveType<E>
       })
       .catch(errorCallback)
   }
