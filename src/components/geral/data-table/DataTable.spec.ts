@@ -135,11 +135,47 @@ describe('DataTable', () => {
   })
 
   describe('DataTable Body', () => {
+    it('should hide an empty line when the number of items is greater than 0', () => {
+      const { wrapper } = mountFactory()
+
+      const emptyRow = wrapper.find<HTMLTableRowElement>('tbody tr[data-empty-row]')
+      const display = emptyRow.element.style.display
+
+      expect(display).toContain('none')
+    })
+
+    it('should show the empty row to the user when the table is empty', () => {
+      const { wrapper } = mountFactory({
+        props: {
+          items: []
+        }
+      })
+
+      const emptyRow = wrapper.find<HTMLTableRowElement>('tbody tr[data-empty-row]')
+      const display = emptyRow.element.style.display
+
+      expect(display).not.contain('none')
+      expect(emptyRow.text()).toContain('Sem dados')
+    })
+
+    it('the empty line must fill 100% of the available header width', () => {
+      const { wrapper, headers } = mountFactory({
+        props: {
+          items: []
+        }
+      })
+
+      const cellEmpty = wrapper.find<HTMLTableCellElement>('tbody tr[data-empty-row] td')
+
+      expect(cellEmpty.exists()).toBe(true)
+      expect(Number(cellEmpty.attributes('colspan'))).toBe(headers.length)
+    })
+
     it('should render the content correctly in the table body', () => {
       const { wrapper, items } = mountFactory()
 
       const body = wrapper.find('tbody')
-      const rows = body.findAll('tr')
+      const rows = body.findAll('tr[data-row]')
 
       const firstRow = rows.at(0)
 
