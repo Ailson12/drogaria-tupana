@@ -56,3 +56,11 @@
 .sidebar-wrapper .sidebar-content li + li {
   margin-top: 0.5rem;
 }
+
+.sidebar-bg {
+  z-index: 50;
+  display: flex;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.2);
+}
