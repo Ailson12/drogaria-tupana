@@ -9,11 +9,12 @@ import type { PageableReceiveType, PageableSend } from '@/types/geral/Pagination
 type Params<E extends ModelType> = {
   service: CrudServiceType<E>
   routeNameForm: string
+  initialPagingParams?: PageableSend
 }
 
 export const useDataTableManager = <E extends ModelType>(params: Params<E>) => {
   const loading = ref<boolean>(false)
-  const pagingParams = ref(PageableService.params())
+  const pagingParams = ref(params.initialPagingParams || PageableService.params())
   const pagingData: Ref<PageableReceiveType<E>> = ref({
     items: [],
     totalPages: 0,

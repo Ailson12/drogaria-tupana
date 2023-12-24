@@ -19,12 +19,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-show="!items.length">
+            <tr data-empty-row v-show="!items.length">
               <td :colspan="headers.length">
                 <empty-data />
               </td>
             </tr>
-            <tr v-for="(item, index) in items" :key="index">
+            <tr data-row v-for="(item, index) in items" :key="index">
               <td
                 v-for="(header, indexHeader) in headers"
                 :key="`${item[header.key]}_${indexHeader}`"

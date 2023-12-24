@@ -11,6 +11,7 @@
 }
 
 .group-form-item input,
+.group-form-item select,
 .group-form-item textarea {
   outline: 0;
   font-size: 0.875rem;
@@ -26,9 +27,11 @@
   resize: none;
 }
 
-.group-form-item textarea:hover,
+.group-form-item select:hover,
 .group-form-item input:hover,
+.group-form-item textarea:hover,
 .group-form-item input:focus-visible,
+.group-form-item select:focus-visible,
 .group-form-item textarea :focus-visible {
   border-color: var(--cp2);
 }

@@ -1,9 +1,9 @@
 import { api } from '@/config/api'
 import type { AxiosInstance } from 'axios'
+import type { ModelType } from '@/types/geral/ModelType'
 import { errorCallback } from '@/helpers/service/service.helper'
 import type { CrudServiceType, DataFormType } from '@/types/geral/CrudServiceType'
 import type { PageableReceiveType, PageableSend } from '@/types/geral/PaginationType'
-import type { ModelType } from '@/types/geral/ModelType'
 
 export class BaseService<E extends ModelType> implements CrudServiceType<E> {
   private baseUrl: string
@@ -11,6 +11,13 @@ export class BaseService<E extends ModelType> implements CrudServiceType<E> {
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl
+  }
+
+  findAll() {
+    return this.http
+      .get(this.baseUrl)
+      .then<E[]>((response) => response.data)
+      .catch(errorCallback)
   }
 
   paginate(params: PageableSend) {

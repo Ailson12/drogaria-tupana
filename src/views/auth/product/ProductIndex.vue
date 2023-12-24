@@ -9,6 +9,9 @@
       :pagingData="dataTableManager.pagingData.value"
       @update-params="(value) => dataTableManager.setParams(value)"
     >
+      <template #category="{ item }">
+        {{ item.value.name }}
+      </template>
       <template #actions="{ row }">
         <dropdown-component
           title="Ações"
@@ -42,6 +45,7 @@
 import { defineComponent } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
 import { ProductService } from '@/services/product.service'
+import { PageableService } from '@/services/pageable.service'
 import type { ProductType } from '@/types/product/ProductType'
 import { creationDateFormatter } from '@/helpers/date/date.helper'
 import DataTable from '@/components/geral/data-table/DataTable.vue'
@@ -61,6 +65,10 @@ export default defineComponent({
     const routeNameForm = 'product.form'
     const dataTableManager = useDataTableManager<ProductType>({
       routeNameForm,
+      initialPagingParams: {
+        _expand: 'category',
+        ...PageableService.params()
+      },
       service: ProductService.init()
     })
 
@@ -77,9 +85,8 @@ export default defineComponent({
         minWidth: '180px'
       },
       {
-        title: 'Descrição',
-        key: 'description',
-        minWidth: '180px'
+        title: 'Categoria',
+        key: 'category'
       },
       {
         title: 'Preço',
