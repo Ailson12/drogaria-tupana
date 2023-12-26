@@ -3,7 +3,10 @@ import type { RouteRecordRaw } from 'vue-router'
 export const loginRoutes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/login'
+    meta: {
+      isPublic: true
+    },
+    component: () => import('@/views/public/site/SiteIndex.vue')
   },
   {
     path: '/login',
