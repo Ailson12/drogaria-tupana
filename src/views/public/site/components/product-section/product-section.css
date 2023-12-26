@@ -1,0 +1,24 @@
+.product-section-bg {
+  background-color: var(--c11);
+}
+
+.product-section-wrapper {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 3.75rem;
+}
+
+.product-section-wrapper h1 {
+  font-size: 32px;
+  color: var(--c1);
+  text-align: center;
+  margin-bottom: 3.75rem;
+  font-family: 'Merriweather';
+}
+
+.product-section-bg .product-listing {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
