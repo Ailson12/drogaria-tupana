@@ -13,9 +13,18 @@ export default defineComponent({
     size: {
       type: String as PropType<'medium' | 'large' | 'small'>,
       default: 'medium'
+    },
+    radius: {
+      type: String,
+      default: '6px'
     }
   }
 })
 </script>
 
 <style scoped src="./custom-button.css" />
+<style scoped>
+.custom-button {
+  border-radius: v-bind(radius);
+}
+</style>

@@ -6,7 +6,6 @@
   cursor: pointer;
   font-weight: 700;
   color: var(--cp1);
-  border-radius: 6px;
   letter-spacing: 0.5px;
   background-color: var(--cp6);
 }

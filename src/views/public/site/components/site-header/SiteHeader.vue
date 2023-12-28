@@ -18,7 +18,7 @@
             <a href="#sobre">Sobre</a>
           </li>
           <li>
-            <a href="#login">Login</a>
+            <router-link to="/login">Login</router-link>
           </li>
         </ul>
       </nav>

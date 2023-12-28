@@ -1,6 +1,11 @@
 <template>
   <div class="dropdown-wrapper">
-    <custom-button class="dropdown-wrapper-button" @click="toggleVisible" size="small">
+    <custom-button
+      type="button"
+      class="dropdown-wrapper-button"
+      @click="toggleVisible"
+      size="small"
+    >
       {{ title }}
     </custom-button>
     <ul :ref="refList" :class="{ 'contains-only-1': items?.length === 1 }" v-show="show">
