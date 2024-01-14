@@ -41,9 +41,8 @@ export default defineComponent({
     CustomButton
   },
   setup() {
-    const inputRef = generateUUID()
     return {
-      inputRef
+      inputRef: generateUUID()
     }
   },
   data() {

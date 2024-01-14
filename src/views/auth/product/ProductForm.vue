@@ -72,17 +72,23 @@ export default defineComponent({
   },
   setup() {
     const fileFieldRef = ref<{ attachment: AttachmentType }>()
-    const getRequestBody = (data: DataFormType, entity?: ProductType) => {
-      return {
-        ...data,
-        categoryId: data.category,
-        price: unformat(data.price as string),
-        created_at: entity?.created_at ?? new Date(),
-        url_product_image: fileFieldRef.value?.attachment?.base64 ?? null
-      }
-    }
     const service = ProductService.init()
     const categoryService = CategoryService.init()
+
+    const fillProductImage = (url: string) => {
+      const extension = url.split(';')?.at(0)?.split('/')?.at(1)
+      fetch(url)
+        .then((response) => response.blob())
+        .then((data) => {
+          if (fileFieldRef.value) {
+            fileFieldRef.value.attachment = {
+              base64: url,
+              name: `imagem.${extension}`,
+              linkPreview: URL.createObjectURL(data)
+            }
+          }
+        })
+    }
 
     const basicFormManager = useBasicFormManager<ProductType>({
       service,
@@ -90,8 +96,20 @@ export default defineComponent({
       messages: {
         errorFindById: 'Produto não encontrado'
       },
-      getRequestBody,
+      getRequestBody(data, entity) {
+        return {
+          ...data,
+          categoryId: data.category,
+          price: unformat(data.price as string),
+          created_at: entity?.created_at ?? new Date(),
+          url_product_image: fileFieldRef.value?.attachment?.base64 ?? null
+        }
+      },
       fillEdition(entity) {
+        if (entity.url_product_image) {
+          fillProductImage(entity.url_product_image)
+        }
+
         return {
           name: entity.name,
           category: entity.categoryId,

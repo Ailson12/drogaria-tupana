@@ -6,8 +6,9 @@
         <product-card
           v-for="product in products"
           :key="product.id"
-          :price="product.price"
+          :price="+product.price"
           :title="product.name"
+          :image-url="product.url_product_image"
         />
       </div>
     </section>
@@ -17,7 +18,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ProductCard from '../product-card/ProductCard.vue'
-import { generateUUID } from '@/helpers/uuid/uuid.helper'
+import { ProductService } from '@/services/product.service'
+import type { ProductType } from '@/types/product/ProductType'
 
 export default defineComponent({
   name: 'ProductSection',
@@ -25,30 +27,24 @@ export default defineComponent({
     ProductCard
   },
   setup() {
-    const products = [
-      {
-        id: generateUUID(),
-        name: 'Creme de assaduras Huggies Supreme Care - 80g',
-        price: 23.99
-      },
-      {
-        id: generateUUID(),
-        name: 'Xarope Vick 44e 120ml',
-        price: 21.45
-      },
-      {
-        id: generateUUID(),
-        name: 'Cloridrato De Venlafaxina 150mg Com 30 Cápsula',
-        price: 32.27
-      },
-      {
-        id: generateUUID(),
-        name: 'Dipirona Monoidratada',
-        price: 7.91
-      }
-    ]
-
-    return { products }
+    const service = ProductService.init()
+    return { service }
+  },
+  data() {
+    return {
+      products: [] as ProductType[]
+    }
+  },
+  mounted() {
+    this.fetchProducts()
+  },
+  methods: {
+    fetchProducts(): void {
+      this.service
+        .findAll()
+        .then((data) => (this.products = data))
+        .catch(() => this.$toast.info('Erro ao listar produtos'))
+    }
   }
 })
 </script>

@@ -1,0 +1,28 @@
+.product-card-wrapper {
+  width: 15.625rem;
+  display: flex;
+  padding: 1rem;
+  border-radius: 6px;
+  flex-direction: column;
+  background-color: var(--c10);
+}
+
+.product-card-wrapper .product-image {
+  margin-bottom: 1.25rem;
+}
+
+.product-card-wrapper .product-image img {
+  border-radius: 6px;
+}
+
+.product-card-wrapper .price {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.product-card-wrapper .description {
+  font-size: 0.875rem;
+  font-weight: 600;
+  flex: 1;
+  margin-bottom: 0.75rem;
+}

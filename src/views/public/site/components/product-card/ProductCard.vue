@@ -1,7 +1,7 @@
 <template>
   <div class="product-card-wrapper">
     <div class="product-image">
-      <img src="@/assets/images/product-image.png" :alt="title" width="228" height="149" />
+      <img :src="productUrl" :alt="title" width="228" height="149" />
     </div>
     <p class="price c1">{{ formatMoney(price) }}</p>
     <p class="description c2">{{ title }}</p>
@@ -10,8 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import { formatMoney } from '@/helpers/money/money.helper'
+import ImageDefault from '@/assets/images/product-image.png'
 import CustomButton from '@/components/geral/custom-button/CustomButton.vue'
 
 export default defineComponent({
@@ -27,39 +28,23 @@ export default defineComponent({
     title: {
       type: String,
       required: true
+    },
+    imageUrl: {
+      default: null,
+      type: String as PropType<string | null>
     }
   },
   setup() {
     return {
       formatMoney
     }
+  },
+  computed: {
+    productUrl() {
+      return this.imageUrl ?? ImageDefault
+    }
   }
 })
 </script>
 
-<style scoped>
-.product-card-wrapper {
-  width: 15.625rem;
-  display: flex;
-  padding: 1rem;
-  border-radius: 6px;
-  flex-direction: column;
-  background-color: var(--c10);
-}
-
-.product-card-wrapper .product-image {
-  margin-bottom: 1.25rem;
-}
-
-.product-card-wrapper .price {
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-
-.product-card-wrapper .description {
-  font-size: 0.875rem;
-  font-weight: 600;
-  flex: 1;
-  margin-bottom: 0.75rem;
-}
-</style>
+<style src="./product-card.css" scoped />
